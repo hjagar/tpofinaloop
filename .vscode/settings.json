@@ -1,0 +1,4 @@
+{
+    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
+    "bladeFormatter.format.indentSize": 2
+}

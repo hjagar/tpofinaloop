@@ -1,0 +1,17 @@
+{
+    "name": "hjagar/tpofinaloop",
+    "description": "Trabajo Práctico Final OOP",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Gonzalo Molina"
+        }
+    ],
+    "require": {}
+}
