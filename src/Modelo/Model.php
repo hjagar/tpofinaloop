@@ -39,6 +39,16 @@ abstract class Model
     return $className;
   }
 
+  public static function all(): array
+  {
+    $pdo = Database::getConnection();
+    $stmt = $pdo->prepare("SELECT * FROM " . static::getTable());
+    $stmt->execute();
+    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return array_map([static::class, 'mapToObject'], $data);
+  }
+
   public static function find(int $id): ?static
   {
     $pdo = Database::getConnection();
@@ -101,6 +111,23 @@ abstract class Model
   public function setFields(array $fields): void
   {
     $this->fields = $fields;
+  }
+
+  public function fill(array $data): void
+  {
+    foreach ($data as $key => $value) {
+      if (property_exists($this, $key)) {
+        $this->$key = $value;
+      }
+    }
+  }
+
+  public function delete(): bool
+  {
+    $pdo = Database::getConnection();
+    $query = "DELETE FROM " . self::getTable() . " WHERE " . static::getPrimaryKey() . " = :id";
+    $stmt = $pdo->prepare($query);
+    return $stmt->execute(['id' => $this->fields[static::getPrimaryKey()]]);
   }
 
   public function save(): bool
