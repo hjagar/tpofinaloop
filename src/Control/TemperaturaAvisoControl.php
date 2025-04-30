@@ -1,8 +1,9 @@
 <?php
 namespace App\Control;
+use App\Control\Request;
 use App\Modelo\TemperaturaAviso;
 
-class TemperaturaAvisoController
+class TemperaturaAvisoControl
 {
     public function index()
     {
@@ -26,21 +27,26 @@ class TemperaturaAvisoController
 
     public function update($id, Request $data)
     {
+        $result = null;
         $temperaturaAviso = TemperaturaAviso::find($id);
+
         if ($temperaturaAviso) {
             $temperaturaAviso->fill($data->getFields());
-            $temperaturaAviso->save();
-            return $temperaturaAviso;
+            $result = $temperaturaAviso->save();
         }
-        return null;
+
+        return $result;
     }
+
     public function delete($id)
     {
+        $result = false;
         $temperaturaAviso = TemperaturaAviso::find($id);
+        
         if ($temperaturaAviso) {
-            $temperaturaAviso->delete();
-            return true;
+            $result = $temperaturaAviso->delete();
         }
-        return false;
-    }
+
+        return $result;
+    }    
 }

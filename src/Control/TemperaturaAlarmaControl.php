@@ -1,8 +1,9 @@
 <?php
 namespace App\Control;
+use App\Control\Request;
 use App\Modelo\TemperaturaAlarma;
 
-class TemperaturaAlarmaController
+class TemperaturaAlarmaControl 
 {
     public function index()
     {
@@ -26,21 +27,27 @@ class TemperaturaAlarmaController
 
     public function update($id, Request $data)
     {
+        $result = null;
         $temperaturaAlarma = TemperaturaAlarma::find($id);
+
         if ($temperaturaAlarma) {
             $temperaturaAlarma->fill($data->getFields());
             $temperaturaAlarma->save();
-            return $temperaturaAlarma;
+            $result = $temperaturaAlarma;
         }
-        return null;
+
+        return $result;
     }
+
     public function delete($id)
     {
+        $result = false;
         $temperaturaAlarma = TemperaturaAlarma::find($id);
+
         if ($temperaturaAlarma) {
-            $temperaturaAlarma->delete();
-            return true;
+            $result = $temperaturaAlarma->delete();
         }
-        return false;
+
+        return $result;
     }
 }
