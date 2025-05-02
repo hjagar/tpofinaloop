@@ -10,7 +10,8 @@ use App\Modelo\TemperaturaSensorHeladera;
 use App\Modelo\TemperaturaSensorServidor;
 use App\Modelo\TemperaturaSensorTemperaturaAviso;
 use App\Control\Request;
-use App\Interface\Main;
+use App\Interface\MainView;
+use App\Interface\Administracion\TemperaturaAlarma\ListarTemperaturaAlarmaView;
 use App\Control\Control;
 use App\Control\TemperaturaSensorControl;
 use App\Control\TemperaturaSensorHeladeraControl;
@@ -19,7 +20,7 @@ use App\Control\TemperaturaSensorTemperaturaAvisoControl;
 use App\Control\TemperaturaAlarmaControl;
 use App\Control\TemperaturaAvisoControl;
 use App\Control\TemperaturaRegistroControl;
-
+use App\Interface\Administracion\TemperaturaAlarmaView;
 
 $a = new TemperaturaSensorControl();
 $b = new TemperaturaSensorHeladeraControl();
@@ -30,7 +31,7 @@ $f = new TemperaturaAvisoControl();
 $g = new TemperaturaRegistroControl();
 $h = new Control();
 $i = new Request();
-$j = new Main();
+$mainView = new MainView();
 $k = new TemperaturaAlarma();
 $l = new TemperaturaAviso();
 $m = new TemperaturaRegistro();
@@ -63,3 +64,6 @@ $q = new TemperaturaSensorTemperaturaAviso();
 // echo $temperaturaSensor->idtemperaturasensor . "\n";
 
 //$temperaturaSensorController = new TemperaturaSensorController();
+//$t = new ListarTemperaturaAlarmaView();
+//$t->run();
+$mainView->run();
