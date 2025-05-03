@@ -1,6 +1,10 @@
 <?php
 namespace App\Interface\Administracion;
 use App\Interface\MenuView;
+use App\Interface\TemperaturaRegistro\AgregarTemperaturaRegistroView;
+use App\Interface\TemperaturaRegistro\ModificarTemperaturaRegistroView;
+use App\Interface\TemperaturaRegistro\EliminarTemperaturaRegistroView;
+use App\Interface\TemperaturaRegistro\ListarTemperaturaRegistroView;
 
 class TemperaturaRegistroView extends MenuView
 {
@@ -8,19 +12,19 @@ class TemperaturaRegistroView extends MenuView
     protected $menu = [
         '1' => [
             'Label' => 'Agregar Registro',
-            'Class' => 'App\Interface\Administracion\TemperaturaRegistro\AgregarTemperaturaRegistroView',
+            'Class' => AgregarTemperaturaRegistroView::class,
         ],
         '2' => [
             'Label' => 'Modificar Registro',
-            'Class' => 'App\Interface\Administracion\TemperaturaRegistro\ModificarTemperaturaRegistroView',
+            'Class' => ModificarTemperaturaRegistroView::class,
         ],
         '3' => [
             'Label' => 'Eliminar Registro',
-            'Class' => 'App\Interface\Administracion\TemperaturaRegistro\EliminarTemperaturaRegistroView',
+            'Class' => EliminarTemperaturaRegistroView::class,
         ],
         '4' => [
             'Label' => 'Listar Registros',
-            'Class' => 'App\Interface\Administracion\TemperaturaRegistro\ListarTemperaturaRegistroView',
+            'Class' => ListarTemperaturaRegistroView::class,
         ],
         '0' => [
             'Label' => 'Volver al menú anterior',

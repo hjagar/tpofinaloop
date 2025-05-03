@@ -1,6 +1,10 @@
 <?php
 namespace App\Interface\Administracion;
 use App\Interface\MenuView;
+use App\Interface\TemperaturaAviso\AgregarTemperaturaAvisoView;
+use App\Interface\TemperaturaAviso\ModificarTemperaturaAvisoView;
+use App\Interface\TemperaturaAviso\EliminarTemperaturaAvisoView;
+use App\Interface\TemperaturaAviso\ListarTemperaturaAvisoView;
 
 class TemperaturaAvisoView extends MenuView
 {
@@ -8,19 +12,19 @@ class TemperaturaAvisoView extends MenuView
     protected $menu = [
         '1' => [
             'Label' => 'Agregar Aviso',
-            'Class' => 'App\Interface\Administracion\TemperaturaAviso\AgregarTemperaturaAvisoView',
+            'Class' => AgregarTemperaturaAvisoView::class,
         ],
         '2' => [
             'Label' => 'Modificar Aviso',
-            'Class' => 'App\Interface\Administracion\TemperaturaAviso\ModificarTemperaturaAvisoView',
+            'Class' => ModificarTemperaturaAvisoView::class,,
         ],
         '3' => [
             'Label' => 'Eliminar Aviso',
-            'Class' => 'App\Interface\Administracion\TemperaturaAviso\EliminarTemperaturaAvisoView',
+            'Class' => EliminarTemperaturaAvisoView::class,,
         ],
         '4' => [
             'Label' => 'Listar Avisos',
-            'Class' => 'App\Interface\Administracion\TemperaturaAviso\ListarTemperaturaAvisoView',
+            'Class' => ListarTemperaturaAvisoView::class,
         ],
         '0' => [
             'Label' => 'Volver al menú anterior',

@@ -1,6 +1,10 @@
 <?php
 namespace App\Interface\Administracion;
 use App\Interface\MenuView;
+use App\Interface\TemperaturaSensorTemperaturaAviso\AgregarTemperaturaSensorTemperaturaAvisoView;
+use App\Interface\TemperaturaSensorTemperaturaAviso\ModificarTemperaturaSensorTemperaturaAvisoView;
+use App\Interface\TemperaturaSensorTemperaturaAviso\EliminarTemperaturaSensorTemperaturaAvisoView;
+use App\Interface\TemperaturaSensorTemperaturaAviso\ListarTemperaturaSensorTemperaturaAvisoView;
 
 class TemperaturaSensorTemperaturaAvisoView extends MenuView
 {
@@ -8,19 +12,19 @@ class TemperaturaSensorTemperaturaAvisoView extends MenuView
     protected $menu = [
         '1' => [
             'Label' => 'Agregar Sensor',
-            'Class' => 'App\Interface\Administracion\TemperaturaSensorTemperaturaAviso\AgregarTemperaturaSensorTemperaturaAvisoView',
+            'Class' => AgregarTemperaturaSensorTemperaturaAvisoView::class,
         ],
         '2' => [
             'Label' => 'Modificar Sensor',
-            'Class' => 'App\Interface\Administracion\TemperaturaSensorTemperaturaAviso\ModificarTemperaturaSensorTemperaturaAvisoView',
+            'Class' => ModificarTemperaturaSensorTemperaturaAvisoView::class,
         ],
         '3' => [
             'Label' => 'Eliminar Sensor',
-            'Class' => 'App\Interface\Administracion\TemperaturaSensorTemperaturaAviso\EliminarTemperaturaSensorTemperaturaAvisoView',
+            'Class' => EliminarTemperaturaSensorTemperaturaAvisoView::class,
         ],
         '4' => [
             'Label' => 'Listar Sensores',
-            'Class' => 'App\Interface\Administracion\TemperaturaSensorTemperaturaAviso\ListarTemperaturaSensorTemperaturaAvisoView',
+            'Class' => ListarTemperaturaSensorTemperaturaAvisoView::class,
         ],
         '0' => [
             'Label' => 'Volver al menú anterior',

@@ -56,7 +56,7 @@ abstract class ListView extends ActionView
     {
         $columnWidth = $this->getColumnsWidth()[$column]['ColumnLength'];
         //$columnIntialPosition = $this->getColumnsWidth()[$column]['ColumnIntialPosition'];
-        return str_pad(is_null($value) ? '' : $value, $columnWidth, ' ', STR_PAD_RIGHT);
+        return str_pad($value === null ? '' : $value, $columnWidth, ' ', STR_PAD_RIGHT);
     }
 
     protected function showData(array $data): void

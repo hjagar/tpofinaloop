@@ -1,6 +1,10 @@
 <?php
 namespace App\Interface\Administracion;
 use App\Interface\MenuView;
+use App\Interface\TemperaturaAlarma\AgregarTemperaturaAlarmaView;
+use App\Interface\TemperaturaAlarma\ModificarTemperaturaAlarmaView;
+use App\Interface\TemperaturaAlarma\EliminarTemperaturaAlarmaView;
+use App\Interface\TemperaturaAlarma\ListarTemperaturaAlarmaView;
 
 class TemperaturaAlarmaView extends MenuView
 {
@@ -8,19 +12,19 @@ class TemperaturaAlarmaView extends MenuView
     protected $menu = [
         '1' => [
             'Label' => 'Agregar Alarma',
-            'Class' => 'App\Interface\Administracion\TemperaturaAlarma\AgregarTemperaturaAlarmaView',
+            'Class' => AgregarTemperaturaAlarmaView::class,
         ],
         '2' => [
             'Label' => 'Modificar Alarma',
-            'Class' => 'App\Interface\Administracion\TemperaturaAlarma\ModificarTemperaturaAlarmaView',
+            'Class' => ModificarTemperaturaAlarmaView::class,,
         ],
         '3' => [
             'Label' => 'Eliminar Alarma',
-            'Class' => 'App\Interface\Administracion\TemperaturaAlarma\EliminarTemperaturaAlarmaView',
+            'Class' => EliminarTemperaturaAlarmaView::class,,
         ],
         '4' => [
             'Label' => 'Listar Alarmas',
-            'Class' => 'App\Interface\Administracion\TemperaturaAlarma\ListarTemperaturaAlarmaView',
+            'Class' => ListarTemperaturaAlarmaView::class,
         ],
         '0' => [
             'Label' => 'Volver al menú anterior',

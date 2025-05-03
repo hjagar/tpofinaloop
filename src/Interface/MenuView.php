@@ -47,8 +47,8 @@ abstract class MenuView extends BaseView
     private function showMenuItem($opcion, $menuItem)
     {
         $label = $menuItem['Label'];
-        $labelColor = isset($menuItem['Color']) ? $menuItem['Color'] : "";
-        $optionColor = isset($menuItem['Color']) ? $menuItem['Color'] : "\e[1;34m";
+        $labelColor = $menuItem['Color'] ?? "";
+        $optionColor = $menuItem['Color'] ?? "\e[1;34m";
         $message = "{$labelColor}{$label}\e[0m";
         
         echo "{$optionColor}{$opcion}\e[0m. {$message}\n";

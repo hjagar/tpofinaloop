@@ -1,6 +1,10 @@
 <?php
 namespace App\Interface\Administracion;
 use App\Interface\MenuView;
+use App\Interface\TemperaturaSensor\AgregarTemperaturaSensorView;
+use App\Interface\TemperaturaSensor\ModificarTemperaturaSensorView;
+use App\Interface\TemperaturaSensor\EliminarTemperaturaSensorView;
+use App\Interface\TemperaturaSensor\ListarTemperaturaSensorView;
 
 class TemperaturaSensorView extends MenuView
 {
@@ -8,19 +12,19 @@ class TemperaturaSensorView extends MenuView
     protected $menu = [
         '1' => [
             'Label' => 'Agregar Sensor',
-            'Class' => 'App\Interface\Administracion\TemperaturaSensor\AgregarTemperaturaSensorView',
+            'Class' => AgregarTemperaturaSensorView::class,
         ],
         '2' => [
             'Label' => 'Modificar Sensor',
-            'Class' => 'App\Interface\Administracion\TemperaturaSensor\ModificarTemperaturaSensorView',
+            'Class' => ModificarTemperaturaSensorView::class,
         ],
         '3' => [
             'Label' => 'Eliminar Sensor',
-            'Class' => 'App\Interface\Administracion\TemperaturaSensor\EliminarTemperaturaSensorView',
+            'Class' => EliminarTemperaturaSensorView::class,
         ],
         '4' => [
             'Label' => 'Listar Sensores',
-            'Class' => 'App\Interface\Administracion\TemperaturaSensor\ListarTemperaturaSensorView',
+            'Class' => ListarTemperaturaSensorView::class,
         ],
         '0' => [
             'Label' => 'Volver al menú anterior',

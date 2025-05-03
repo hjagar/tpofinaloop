@@ -1,6 +1,10 @@
 <?php
 namespace App\Interface\Administracion;
 use App\Interface\MenuView;
+use App\Interface\TemperaturaSensorHeladera\AgregarSensorHeladeraView;
+use App\Interface\TemperaturaSensorHeladera\ModificarSensorHeladeraView;
+use App\Interface\TemperaturaSensorHeladera\EliminarSensorHeladeraView;
+use App\Interface\TemperaturaSensorHeladera\ListarSensorHeladeraView;
 
 class TemperaturaSensorHeladeraView extends MenuView
 {
@@ -8,19 +12,19 @@ class TemperaturaSensorHeladeraView extends MenuView
     protected $menu = [
         '1' => [
             'Label' => 'Agregar Sensor',
-            'Class' => 'App\Interface\Administracion\TemperaturaSensorHeladera\AgregarSensorHeladeraView',
+            'Class' => AgregarSensorHeladeraView::class,
         ],
         '2' => [
             'Label' => 'Modificar Sensor',
-            'Class' => 'App\Interface\Administracion\TemperaturaSensorHeladera\ModificarSensorHeladeraView',
+            'Class' => ModificarSensorHeladeraView::class,
         ],
         '3' => [
             'Label' => 'Eliminar Sensor',
-            'Class' => 'App\Interface\Administracion\TemperaturaSensorHeladera\EliminarSensorHeladeraView',
+            'Class' => EliminarSensorHeladeraView::class,
         ],
         '4' => [
             'Label' => 'Listar Sensores',
-            'Class' => 'App\Interface\Administracion\TemperaturaSensorHeladera\ListarSensorHeladeraView',
+            'Class' => ListarSensorHeladeraView::class,
         ],
         '0' => [
             'Label' => 'Volver al menú anterior',

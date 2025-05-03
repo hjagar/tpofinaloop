@@ -5,19 +5,19 @@ abstract class BaseView
 {
     protected $title;
 
-    public function run() 
+    public function run(): void 
     {
         $this->render();
     }
 
-    protected abstract function render();
+    abstract protected function render();
 
-    protected function getTitle()
+    protected function getTitle(): string
     {
         return $this->title;
     }
 
-    protected function showTitle()
+    protected function showTitle(): void
     {
         $title = $this->getTitle();
         if (empty($title)) {

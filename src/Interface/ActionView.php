@@ -16,7 +16,7 @@ abstract class ActionView extends BaseView
         if (class_exists($controlClass)) {
             $this->controlClass = new $controlClass();
         } else {
-            throw new \Exception("Control class does not exist: " . $controlClass);
+            throw new \Exception("Control class does not exist: {$controlClass}");
         }
     }
 
