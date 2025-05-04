@@ -6,7 +6,6 @@ use App\Control\TemperaturaAlarmaControl;
 class ListarTemperaturaAlarmaView extends ListView
 {
     protected $title = 'Listado de Alarmas de Temperatura';
-    protected $controlClass = TemperaturaAlarmaControl::class;
 
     protected $columns = [
         'Id Alarma',
@@ -16,6 +15,11 @@ class ListarTemperaturaAlarmaView extends ListView
         'Fecha y Hora de Inicio',
         'Fecha y Hora de Fin'
     ];
+
+    public function __construct()
+    {
+        parent::__construct(TemperaturaAlarmaControl::class);
+    }
 
     public function render()
     {

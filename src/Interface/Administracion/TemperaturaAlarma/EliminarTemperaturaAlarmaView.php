@@ -6,14 +6,14 @@ use App\Interface\Componentes\Input;
 
 class EliminarTemperaturaAlarmaView extends FormView
 {
-    protected $title = 'Eliminar Alarma de Temperatura';
-    protected $controlClass = TemperaturaAlarmaControl::class;
+    protected $title = 'Eliminar Alarma de Temperatura';    
 
     public function __construct()
     {
-        parent::__construct([
-            new Input('Id Temperatura Alarma', true),
-        ]);
+        parent::__construct(
+            TemperaturaAlarmaControl::class,
+            [new Input('Id Temperatura Alarma', true)]
+        );
     }
 
     public function render()

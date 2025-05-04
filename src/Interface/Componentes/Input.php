@@ -21,7 +21,8 @@ class Input
 
     public function show(): void
     {
-        $value = readline("{$this->getLabel()}: ");
+        $label = "{$this->getLabel()}: ";
+        $value = readline($label);
 
         if ($this->isRequired() && empty($value)) {
             echo "{$this->getName()} es requerido.\n";

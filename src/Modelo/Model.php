@@ -23,6 +23,7 @@ abstract class Model
 
   public static function getPrimaryKey(): string  | array
   {
+    //TODO: corregir esto, si esta seteada anteriormente toma la anterior y no la actual.
     isset(static::$primaryKey) or static::$primaryKey = "id" . strtolower(static::getClassName());
     return static::$primaryKey;
   }

@@ -1,13 +1,13 @@
 <?php
 namespace App\Interface;
 use App\Interface\MenuView;
-use App\Interface\TemperaturaSensorView;
-use App\Interface\TemperaturaSensorHeladeraView;
-use App\Interface\TemperaturaSensorServidorView;
-use App\Interface\TemperaturaSensorTemperaturaAvisoView;
-use App\Interface\TemperaturaAlarmaView;
-use App\Interface\TemperaturaAvisoView;
-use App\Interface\TemperaturaRegistroView;
+use App\Interface\Administracion\TemperaturaSensorView;
+use App\Interface\Administracion\TemperaturaSensorHeladeraView;
+use App\Interface\Administracion\TemperaturaSensorServidorView;
+use App\Interface\Administracion\TemperaturaSensorTemperaturaAvisoView;
+use App\Interface\Administracion\TemperaturaAlarmaView;
+use App\Interface\Administracion\TemperaturaAvisoView;
+use App\Interface\Administracion\TemperaturaRegistroView;
 
 class AdministracionView extends MenuView
 {

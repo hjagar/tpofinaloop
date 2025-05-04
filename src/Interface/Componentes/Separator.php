@@ -1,13 +1,17 @@
 <?php
 namespace App\Interface\Componentes;
+use App\Interface\Componentes\EnumInterface;
 
-enum Separator: string
+enum Separator implements EnumInterface
 {
-    case NEWLINE = "\n";
-    case DASH = " - ";
+    case NEWLINE;
+    case DASH;
 
-    public function __toString(): string
+    public function value(): string
     {
-        return $this->value;
+        return match($this) {
+            Separator::NEWLINE => '\n',
+            Separator::DASH => ' - ',
+        };
     }
 }

@@ -9,9 +9,10 @@ class TemperaturaAlarma extends Model {
     public function sensor()
     {
         $sensor = null;
-
-        if(isset($this->idtemperaturasensor)){
-            $sensor = TemperaturaSensor::find($this->idtemperaturasensor);
+        $idtemperaturasensor = $this->idtemperaturasensor;
+        
+        if(isset($idtemperaturasensor)) {
+            $sensor = TemperaturaSensor::find($idtemperaturasensor);
         }
 
         return $sensor;

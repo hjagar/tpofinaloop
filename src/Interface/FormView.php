@@ -2,15 +2,15 @@
 namespace App\Interface;
 use App\Interface\ActionView;
 use App\Interface\Componentes\Choice;
+use App\Interface\Componentes\Direction;
 
 abstract class FormView extends ActionView
 {
     protected $inputs = [];
 
-    public function __construct($inputs = [])
+    public function __construct($controlClass, $inputs = [])
     {
-        parent::__construct();
-        $this->setControlClass($this->controlClass);
+        parent::__construct($controlClass);
         $this->inputs = $inputs;
     }
 
@@ -24,7 +24,8 @@ abstract class FormView extends ActionView
 
     protected function showInputs(): void
     {
-        foreach ($this->inputs as $input) {
+        $inputs = $this->getInputs();
+        foreach ($inputs as $input) {
             $input->show();
         }
     }
@@ -34,7 +35,7 @@ abstract class FormView extends ActionView
         $action = new Choice('Acciones', [
             1 => 'Guardar',
             2 => 'Cancelar'
-        ], true, 'Acción', 'horizontal');        
+        ], true, 'Acción', Direction::HORIZONTAL);        
         $action->show();
         $option = $action->getValue();
 

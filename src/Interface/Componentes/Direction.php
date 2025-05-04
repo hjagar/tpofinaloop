@@ -1,12 +1,13 @@
 <?php
 namespace App\Interface\Componentes;
+use App\Interface\Componentes\EnumInterface;
 
-enum Direction
+enum Direction implements EnumInterface
 {
-    case VERTICAL = 'vertical';
-    case HORIZONTAL = 'horizontal';
+    case VERTICAL;
+    case HORIZONTAL;
 
-    public function __toString(): string
+    public function value(): string
     {
         return $this->value;
     }

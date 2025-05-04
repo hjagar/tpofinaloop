@@ -40,6 +40,6 @@ class Choice extends Input
 
     private function getSeparator(): string
     {
-        return $this->direction === Direction::HORIZONTAL ? Separator::DASH : Separator::NEWLINE;
+        return $this->direction === Direction::HORIZONTAL ? Separator::DASH->value() : Separator::NEWLINE->value();
     }
 }
