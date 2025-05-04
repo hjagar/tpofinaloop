@@ -7,17 +7,17 @@ class ProcesosView extends MenuView
     protected $title = 'Sistema de Monitoreo de Temperatura - Procesos';
     protected $menu = [
         '1' => [
-            'Label' => 'Listar Alarmas',
+            'Label' => Constantes::LIST_LABEL, // 'Listar Alarmas'
             'Class' => 'App\Interface\Procesos\ListarAlarmasView',
         ],
         '2' => [
-            'Label' => 'Agregar Alarma',
+            'Label' => Constantes::ADD_LABEL, // 'Agregar Alarma'
             'Class' => 'App\Interface\Procesos\AgregarAlarmaView',
         ],
-        '0' => [
-            'Label' => 'Salir',
-            'ExitMessage' => 'Saliendo...',
-            'Color' => "\e[1;31m",
+        Constantes::BACK_OPTION => [
+            'Label' => Constantes::EXIT_LABEL,
+            'ExitMessage' => Constantes::EXIT_MESSAGE,
+            'Color' => Constantes::RED_COLOR,
         ]
     ];
 }

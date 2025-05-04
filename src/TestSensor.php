@@ -16,11 +16,11 @@ use App\Modelo\TemperaturaSensor;
 //var_dump($temperaturaAlarmas);
 //
 //var_dump($temperaturaAlarma->sensor()->tscodigo);
-$temperaturaSensor = TemperaturaSensor::find(1);
-var_dump($temperaturaSensor->registros());
+//$temperaturaSensor = TemperaturaSensor::find(1);
+//var_dump($temperaturaSensor->registros());
 
-//$mainView = new MainView();
-//$mainView->run();
+$mainView = new MainView();
+$mainView->run();
 
 //$eliminarTemperaturaAlarmaView = new EliminarTemperaturaAlarmaView();
 //$eliminarTemperaturaAlarmaView->run();

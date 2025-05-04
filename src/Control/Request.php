@@ -29,4 +29,16 @@ class Request
     {
         return $this->fields;
     }
+
+    public function fill(array $inputs): void
+    {
+        foreach ($inputs as $input) {
+            $key = $input->getField();
+            $value = $input->getValue();
+
+            if (property_exists($this, $key)) {
+                $this->$key = $value;
+            }
+        }
+    }
 }

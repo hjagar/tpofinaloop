@@ -3,7 +3,7 @@ namespace App\Interface\Administracion\TemperaturaAlarma;
 use App\Interface\ListView;
 use App\Control\TemperaturaAlarmaControl;
 
-class ListarTemperaturaAlarmaView extends ListView
+class ListarView extends ListView
 {
     protected $title = 'Listado de Alarmas de Temperatura';
 

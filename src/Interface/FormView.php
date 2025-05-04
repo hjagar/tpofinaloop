@@ -3,6 +3,7 @@ namespace App\Interface;
 use App\Interface\ActionView;
 use App\Interface\Componentes\Choice;
 use App\Interface\Componentes\Direction;
+use App\Interface\Constantes;
 
 abstract class FormView extends ActionView
 {
@@ -16,6 +17,13 @@ abstract class FormView extends ActionView
 
     abstract protected function save(): void;
     abstract protected function cancel(): void;
+
+    public function render()
+    {
+        $this->showTitle();
+        $this->showInputs();
+        $this->showActions();
+    }
 
     protected function getInputs(): array
     {
@@ -33,8 +41,8 @@ abstract class FormView extends ActionView
     protected function showActions(): void
     {
         $action = new Choice('Acciones', [
-            1 => 'Guardar',
-            2 => 'Cancelar'
+            1 => Constantes::SAVE,
+            2 => Constantes::CANCEL
         ], true, 'Acción', Direction::HORIZONTAL);        
         $action->show();
         $option = $action->getValue();

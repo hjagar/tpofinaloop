@@ -5,36 +5,38 @@ use App\Interface\TemperaturaSensorTemperaturaAviso\AgregarTemperaturaSensorTemp
 use App\Interface\TemperaturaSensorTemperaturaAviso\ModificarTemperaturaSensorTemperaturaAvisoView;
 use App\Interface\TemperaturaSensorTemperaturaAviso\EliminarTemperaturaSensorTemperaturaAvisoView;
 use App\Interface\TemperaturaSensorTemperaturaAviso\ListarTemperaturaSensorTemperaturaAvisoView;
+use App\Interface\Constantes;
 
 class TemperaturaSensorTemperaturaAvisoView extends MenuView
 {
-    protected $title = 'Administración de Sensores de Temperatura Aviso';
+    protected $title = 'Administración de Avisos y Alarmas de Temperatura';
+    protected $label = 'Aviso Alarma';
     protected $menu = [
-        '1' => [
-            'Label' => 'Agregar Sensor',
-            'Class' => AgregarTemperaturaSensorTemperaturaAvisoView::class,
+        // '1' => [
+        //     'Label' => Constantes::ADD_LABEL, // 'Agregar Sensor'
+        //     'Class' => AgregarTemperaturaSensorTemperaturaAvisoView::class,
+        // ],
+        // '2' => [
+        //     'Label' => Constantes::MODIFY_LABEL, // 'Modificar Sensor'
+        //     'Class' => ModificarTemperaturaSensorTemperaturaAvisoView::class,
+        // ],
+        // '3' => [
+        //     'Label' => Constantes::DELETE_LABEL, // 'Eliminar Sensor'
+        //     'Class' => EliminarTemperaturaSensorTemperaturaAvisoView::class,
+        // ],
+        // '4' => [
+        //     'Label' => Constantes::LIST_LABEL, // 'Listar Sensores'
+        //     'Class' => ListarTemperaturaSensorTemperaturaAvisoView::class,
+        // ],
+        Constantes::BACK_OPTION => [
+            'Label' => Constantes::BACK_LABEL,
+            'ExitMessage' => Constantes::BACK_MESSAGE,
+            'Color' => Constantes::RED_COLOR,
         ],
-        '2' => [
-            'Label' => 'Modificar Sensor',
-            'Class' => ModificarTemperaturaSensorTemperaturaAvisoView::class,
-        ],
-        '3' => [
-            'Label' => 'Eliminar Sensor',
-            'Class' => EliminarTemperaturaSensorTemperaturaAvisoView::class,
-        ],
-        '4' => [
-            'Label' => 'Listar Sensores',
-            'Class' => ListarTemperaturaSensorTemperaturaAvisoView::class,
-        ],
-        '0' => [
-            'Label' => 'Volver al menú anterior',
-            'ExitMessage' => 'Volviendo al menú anterior...',
-            'Color' => "\e[1;31m",
-        ],
-        'X' => [
-            'Label' => 'Salir',
-            'ExitMessage' => 'Saliendo...',
-            'Color' => "\e[1;31m",
+        Constantes::EXIT_OPTION => [
+            'Label' => Constantes::EXIT_LABEL,
+            'ExitMessage' => Constantes::EXIT_MESSAGE,
+            'Color' => Constantes::RED_COLOR,
         ]
     ];
 }
