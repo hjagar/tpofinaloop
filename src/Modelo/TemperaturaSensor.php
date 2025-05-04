@@ -1,28 +1,44 @@
 <?php
 namespace App\Modelo;
 use App\Modelo\Model;
-
+use App\Modelo\TemperaturaRegistro;
+use App\Modelo\TemperaturaSensorServidor;
+use App\Modelo\TemperaturaSensorHeladera;
 
 class TemperaturaSensor extends Model {
     protected static string $table = 'w_temperaturasensor';
 
-    public function registro()
+    public function alarmas()
     {
-        $registro = null;
+        $alarmas = null;
+        $idTemperaturaSensor = $this->idtemperaturasensor ?? null;
 
-        if(isset($this->idtemperaturasensor)){
-            $registro = TemperaturaRegistro::find($this->idtemperaturasensor);
+        if(isset($idTemperaturaSensor)){
+            $alarmas = TemperaturaAlarma::where('idtemperaturasensor', $idTemperaturaSensor);
         }
 
-        return $registro;
+        return $alarmas;
+    }
+
+    public function registros()
+    {
+        $registros = null;
+        $idTemperaturaSensor = $this->idtemperaturasensor ?? null;
+
+        if(isset($idTemperaturaSensor)){
+            $registros = TemperaturaRegistro::where('idtemperaturasensor', $idTemperaturaSensor);
+        }
+
+        return $registros;
     }
 
     public function servidor()
     {
         $servidor = null;
+        $idTemperaturaSensor = $this->idtemperaturasensor ?? null;
 
-        if(isset($this->idtemperaturasensor)){
-            $servidor = TemperaturaSensorServidor::find($this->idtemperaturasensor);
+        if(isset($idTemperaturaSensor)){
+            $servidor = TemperaturaSensorServidor::find($idTemperaturaSensor);
         }
 
         return $servidor;
@@ -30,13 +46,14 @@ class TemperaturaSensor extends Model {
 
     public function heladera()
     {
-        $servidor = null;
+        $heladera = null;
+        $idTemperaturaSensor = $this->idtemperaturasensor ?? null;
 
-        if(isset($this->idtemperaturasensor)){
-            $servidor = TemperaturaSensorHeladera::find($this->idtemperaturasensor);
+        if(isset($idTemperaturaSensor)){
+            $heladera = TemperaturaSensorHeladera::find($idTemperaturaSensor);
         }
 
-        return $servidor;
+        return $heladera;
     }
 }
 ?>

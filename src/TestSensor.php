@@ -8,10 +8,16 @@ use App\Interface\Administracion\TemperaturaAlarma\EliminarTemperaturaAlarmaView
 //$t->run();
 
 use App\Modelo\TemperaturaAlarma;
-$temperaturaAlarma = TemperaturaAlarma::find(1);
-var_dump($temperaturaAlarma->sensor());
+use App\Modelo\TemperaturaSensorHeladera;
+use App\Modelo\TemperaturaSensor;
+//$temperaturaSensorHeladera = TemperaturaSensorHeladera::find(1);
 
-
+//$temperaturaAlarmas = TemperaturaAlarma::where('idtemperaturasensor', 1);
+//var_dump($temperaturaAlarmas);
+//
+//var_dump($temperaturaAlarma->sensor()->tscodigo);
+$temperaturaSensor = TemperaturaSensor::find(1);
+var_dump($temperaturaSensor->registros());
 
 //$mainView = new MainView();
 //$mainView->run();

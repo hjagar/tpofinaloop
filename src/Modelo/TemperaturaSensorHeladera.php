@@ -1,7 +1,7 @@
 <?php
 namespace App\Modelo;
 use App\Modelo\Model;
-
+use App\Modelo\TemperaturaSensor;
 
 class TemperaturaSensorHeladera extends Model {
     protected static string $table = 'w_temperaturasensorheladera';
@@ -10,9 +10,10 @@ class TemperaturaSensorHeladera extends Model {
 
     public function sensor() {
         $sensor = null;
+        $idTemperaturaSensor = $this->idtemperaturasensor ?? null;
         
-        if(isset($this->idtemperaturasensor)) {
-            $sensor = TemperaturaSensor::find($this->idtemperaturasensor);
+        if(isset($idTemperaturaSensor)) {
+            $sensor = TemperaturaSensor::find($idTemperaturaSensor);
         }
 
         return $sensor;

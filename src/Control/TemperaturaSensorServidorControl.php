@@ -1,52 +1,85 @@
 <?php
+
 namespace App\Control;
+
 use App\Control\Request;
 use App\Modelo\TemperaturaSensorServidor;
 
-class TemperaturaSensorServidorControl 
+class TemperaturaSensorServidorControl
 {
-    public function index()
+    public function index(): array | string | null
     {
-        $temperaturaSensorServidor = TemperaturaSensorServidor::all();
-        return $temperaturaSensorServidor;
+        $returnValue = null;
+
+        try {
+            $returnValue = TemperaturaSensorServidor::all();
+        } catch (\Exception $e) {
+            $returnValue = $e->getMessage();
+        }
+
+        return $returnValue;
     }
 
-    public function show($id)
+    public function show($id): object | string | null
     {
-        $temperaturaSensorServidor = TemperaturaSensorServidor::find($id);
-        return $temperaturaSensorServidor;
+        $returnValue = null;
+
+        try {
+            $returnValue = TemperaturaSensorServidor::find($id);
+        } catch (\Exception $e) {
+            $returnValue = $e->getMessage();
+        }
+
+        return $returnValue;
     }
 
-    public function create(Request $data)
+    public function create(Request $data): object | string | null
     {
-        $temperaturaSensorServidor = new TemperaturaSensorServidor();
-        $temperaturaSensorServidor->fill($data->getFields());
-        $temperaturaSensorServidor->save();
-        return $temperaturaSensorServidor;
-    }
+        $returnValue = null;
 
-    public function update($id, Request $data)
-    {
-        $result = null;
-        $temperaturaSensorServidor = TemperaturaSensorServidor::find($id);
-
-        if ($temperaturaSensorServidor) {
+        try {
+            $temperaturaSensorServidor = new TemperaturaSensorServidor();
             $temperaturaSensorServidor->fill($data->getFields());
-            $result = $temperaturaSensorServidor->save();
+            $returnValue = $temperaturaSensorServidor->save();
+        } catch (\Exception $e) {
+            $returnValue = $e->getMessage();
         }
 
-        return $result;
+        return $returnValue;
     }
 
-    public function delete($id)
+    public function update($id, Request $data): object | string | null
     {
-        $result = false;
-        $temperaturaSensorServidor = TemperaturaSensorServidor::find($id);
+        $returnValue = null;
 
-        if ($temperaturaSensorServidor) {
-            $result = $temperaturaSensorServidor->delete();
+        try {
+            $temperaturaSensorServidor = TemperaturaSensorServidor::find($id);
+
+            if ($temperaturaSensorServidor) {
+                $temperaturaSensorServidor->fill($data->getFields());
+                $returnValue = $temperaturaSensorServidor->save();
+            }
+        } catch (\Exception $e) {
+            $returnValue = $e->getMessage();
         }
 
-        return $result;
+        return $returnValue;
+    }
+
+    public function delete($id): bool | string
+    {
+        $returnValue = false;
+        
+        try {
+            $temperaturaSensorServidor = TemperaturaSensorServidor::find($id);
+
+            if ($temperaturaSensorServidor) {
+                $returnValue = $temperaturaSensorServidor->delete();
+            }
+        } catch (\Exception $e) {
+            $returnValue = $e->getMessage();
+        }
+
+        return $returnValue;
     }
 }

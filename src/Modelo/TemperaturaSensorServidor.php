@@ -1,6 +1,7 @@
 <?php
 namespace App\Modelo;
 use App\Modelo\Model;
+use App\Modelo\TemperaturaSensor;
 
 
 class TemperaturaSensorServidor extends Model {
@@ -10,9 +11,10 @@ class TemperaturaSensorServidor extends Model {
 
     public function sensor() {
         $sensor = null;
+        $idTemperaturaSensor = $this->idtemperaturasensor ?? null;
         
-        if(isset($this->idtemperaturasensor)) {
-            $sensor = TemperaturaSensor::find($this->idtemperaturasensor);
+        if(isset($idTemperaturaSensor)) {
+            $sensor = TemperaturaSensor::find($idTemperaturaSensor);
         }
 
         return $sensor;

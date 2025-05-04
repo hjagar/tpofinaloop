@@ -1,51 +1,84 @@
 <?php
+
 namespace App\Control;
+
 use App\Control\Request;
 use App\Modelo\TemperaturaRegistro;
 
 class TemperaturaRegistroControl
 {
-    public function index()
+    public function index(): array | string | null
     {
-        $temperaturaRegistro = TemperaturaRegistro::all();
-        return $temperaturaRegistro;
+        $returnValue = null;
+
+        try {
+            $returnValue = TemperaturaRegistro::all();
+        } catch (\Exception $e) {
+            $returnValue = $e->getMessage();
+        }
+
+        return $returnValue;
     }
 
-    public function show($id)
+    public function show($id): object | string | null
     {
-        $temperaturaRegistro = TemperaturaRegistro::find($id);
-        return $temperaturaRegistro;
+        $returnValue = null;
+
+        try {
+            $returnValue = TemperaturaRegistro::find($id);
+        } catch (\Exception $e) {
+            $returnValue = $e->getMessage();
+        }
+
+        return $returnValue;
     }
 
-    public function create(Request $data)
+    public function create(Request $data): object | string | null
     {
-        $temperaturaRegistro = new TemperaturaRegistro();
-        $temperaturaRegistro->fill($data->getFields());
-        $temperaturaRegistro->save();
-        return $temperaturaRegistro;
-    }
+        $returnValue = null;
 
-    public function update($id, Request $data)
-    {
-        $result = null;
-        $temperaturaRegistro = TemperaturaRegistro::find($id);
-
-        if ($temperaturaRegistro) {
+        try {
+            $temperaturaRegistro = new TemperaturaRegistro();
             $temperaturaRegistro->fill($data->getFields());
-            $result = $temperaturaRegistro->save();
+            $returnValue = $temperaturaRegistro->save();
+        } catch (\Exception $e) {
+            $returnValue = $e->getMessage();
         }
 
-        return $result;
+        return $returnValue;
     }
 
-    public function delete($id)
+    public function update($id, Request $data): object | string | null
     {
-        $result = false;
-        $temperaturaRegistro = TemperaturaRegistro::find($id);
+        $returnValue = null;
+        try {
+            $temperaturaRegistro = TemperaturaRegistro::find($id);
 
-        if ($temperaturaRegistro) {
-            $result = $temperaturaRegistro->delete();
+            if ($temperaturaRegistro) {
+                $temperaturaRegistro->fill($data->getFields());
+                $returnValue = $temperaturaRegistro->save();
+            }
+        } catch (\Exception $e) {
+            $returnValue = $e->getMessage();
         }
-        return $result;
-    }    
+
+        return $returnValue;
+    }
+
+    public function delete($id): bool | string
+    {
+        $returnValue = null;
+
+        try {
+            $temperaturaRegistro = TemperaturaRegistro::find($id);
+
+            if ($temperaturaRegistro) {
+                $returnValue = $temperaturaRegistro->delete();
+            }
+        } catch (\Exception $e) {
+            $returnValue = $e->getMessage();
+        }
+
+        return $returnValue;
+    }
 }
