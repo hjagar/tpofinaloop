@@ -1,52 +1,84 @@
 <?php
+
 namespace App\Control;
+
 use App\Control\Request;
 use App\Modelo\TemperaturaSensorTemperaturaAviso;
 
-class TemperaturaSensorTemperaturaAvisoControl 
+class TemperaturaSensorTemperaturaAvisoControl
 {
-    public function index()
+    public function index(): array | string | null
     {
-        $temperaturaSensorTemperaturaAviso = TemperaturaSensorTemperaturaAviso::all();
-        return $temperaturaSensorTemperaturaAviso;
+        $returnValue = null;
+
+        try {
+            $returnValue = TemperaturaSensorTemperaturaAviso::all();
+        } catch (\Exception $e) {
+            $returnValue = $e->getMessage();
+        }
+
+        return $returnValue;
     }
 
-    public function show($id)
+    public function show($id): object | string | null
     {
-        $temperaturaSensorTemperaturaAviso = TemperaturaSensorTemperaturaAviso::find($id);
-        return $temperaturaSensorTemperaturaAviso;
+        $returnValue = null;
+
+        try {
+            $returnValue = TemperaturaSensorTemperaturaAviso::find($id);
+        } catch (\Exception $e) {
+            $returnValue = $e->getMessage();
+        }
+
+        return $returnValue;
     }
 
-    public function create(Request $data)
+    public function create(Request $data): object | string | null
     {
-        $temperaturaSensorTemperaturaAviso = new TemperaturaSensorTemperaturaAviso();
-        $temperaturaSensorTemperaturaAviso->fill($data->getFields());
-        $temperaturaSensorTemperaturaAviso->save();
-        return $temperaturaSensorTemperaturaAviso;
-    }
+        $returnValue = null;
 
-    public function update($id, Request $data)
-    {
-        $result = null;
-        $temperaturaSensorTemperaturaAviso = TemperaturaSensorTemperaturaAviso::find($id);
-
-        if ($temperaturaSensorTemperaturaAviso) {
+        try {
+            $temperaturaSensorTemperaturaAviso = new TemperaturaSensorTemperaturaAviso();
             $temperaturaSensorTemperaturaAviso->fill($data->getFields());
-            $result = $temperaturaSensorTemperaturaAviso->save();
+            $returnValue = $temperaturaSensorTemperaturaAviso->save();
+        } catch (\Exception $e) {
+            $returnValue = $e->getMessage();
         }
 
-        return $result;
+        return $returnValue;
     }
 
-    public function delete($id)
+    public function update($id, Request $data): object | string | null
     {
-        $result = false;
-        $temperaturaSensorTemperaturaAviso = TemperaturaSensorTemperaturaAviso::find($id);
+        $returnValue = null;
+        try {
+            $temperaturaSensorTemperaturaAviso = TemperaturaSensorTemperaturaAviso::find($id);
 
-        if ($temperaturaSensorTemperaturaAviso) {
-            $result = $temperaturaSensorTemperaturaAviso->delete();
+            if ($temperaturaSensorTemperaturaAviso) {
+                $temperaturaSensorTemperaturaAviso->fill($data->getFields());
+                $returnValue = $temperaturaSensorTemperaturaAviso->save();
+            }
+        } catch (\Exception $e) {
+            $returnValue = $e->getMessage();
         }
 
-        return $result;
+        return $returnValue;
+    }
+
+    public function delete($id): bool | string
+    {
+        $returnValue = false;
+        
+        try {
+            $temperaturaSensorTemperaturaAviso = TemperaturaSensorTemperaturaAviso::find($id);
+
+            if ($temperaturaSensorTemperaturaAviso) {
+                $returnValue = $temperaturaSensorTemperaturaAviso->delete();
+            }
+        } catch (\Exception $e) {
+            $returnValue = $e->getMessage();
+        }
+
+        return $returnValue;
     }
 }
