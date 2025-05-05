@@ -1,10 +1,10 @@
 <?php
 namespace App\Interface\Administracion;
 use App\Interface\MenuView;
-use App\Interface\TemperaturaSensorTemperaturaAviso\AgregarTemperaturaSensorTemperaturaAvisoView;
-use App\Interface\TemperaturaSensorTemperaturaAviso\ModificarTemperaturaSensorTemperaturaAvisoView;
-use App\Interface\TemperaturaSensorTemperaturaAviso\EliminarTemperaturaSensorTemperaturaAvisoView;
-use App\Interface\TemperaturaSensorTemperaturaAviso\ListarTemperaturaSensorTemperaturaAvisoView;
+use App\Interface\TemperaturaSensorTemperaturaAviso\AgregarView;
+use App\Interface\TemperaturaSensorTemperaturaAviso\ModificarView;
+use App\Interface\TemperaturaSensorTemperaturaAviso\EliminarView;
+use App\Interface\TemperaturaSensorTemperaturaAviso\ListarView;
 use App\Interface\Constantes;
 
 class TemperaturaSensorTemperaturaAvisoView extends MenuView
@@ -14,19 +14,20 @@ class TemperaturaSensorTemperaturaAvisoView extends MenuView
     protected $menu = [
         // '1' => [
         //     'Label' => Constantes::ADD_LABEL, // 'Agregar Sensor'
-        //     'Class' => AgregarTemperaturaSensorTemperaturaAvisoView::class,
+        //     'Class' => AgregarView::class,
         // ],
         // '2' => [
         //     'Label' => Constantes::MODIFY_LABEL, // 'Modificar Sensor'
-        //     'Class' => ModificarTemperaturaSensorTemperaturaAvisoView::class,
+        //     'Class' => ModificarView::class,
         // ],
         // '3' => [
         //     'Label' => Constantes::DELETE_LABEL, // 'Eliminar Sensor'
-        //     'Class' => EliminarTemperaturaSensorTemperaturaAvisoView::class,
+        //     'Class' => EliminarView::class,
         // ],
         // '4' => [
         //     'Label' => Constantes::LIST_LABEL, // 'Listar Sensores'
-        //     'Class' => ListarTemperaturaSensorTemperaturaAvisoView::class,
+        //     'Plural' => true,
+        //     'Class' => ListarView::class,
         // ],
         Constantes::BACK_OPTION => [
             'Label' => Constantes::BACK_LABEL,

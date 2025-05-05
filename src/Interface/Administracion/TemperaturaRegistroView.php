@@ -1,10 +1,10 @@
 <?php
 namespace App\Interface\Administracion;
 use App\Interface\MenuView;
-use App\Interface\TemperaturaRegistro\AgregarTemperaturaRegistroView;
-use App\Interface\TemperaturaRegistro\ModificarTemperaturaRegistroView;
-use App\Interface\TemperaturaRegistro\EliminarTemperaturaRegistroView;
-use App\Interface\TemperaturaRegistro\ListarTemperaturaRegistroView;
+use App\Interface\TemperaturaRegistro\AgregarView;
+use App\Interface\TemperaturaRegistro\ModificarView;
+use App\Interface\TemperaturaRegistro\EliminarView;
+use App\Interface\TemperaturaRegistro\ListarView;
 use App\Interface\Constantes;
 
 class TemperaturaRegistroView extends MenuView
@@ -14,19 +14,20 @@ class TemperaturaRegistroView extends MenuView
     protected $menu = [
         // '1' => [
         //     'Label' => Constantes::ADD_LABEL, // 'Agregar Registro'
-        //     'Class' => AgregarTemperaturaRegistroView::class,
+        //     'Class' => AgregarView::class,
         // ],
         // '2' => [
         //     'Label' => Constantes::MODIFY_LABEL, // 'Modificar Registro'
-        //     'Class' => ModificarTemperaturaRegistroView::class,
+        //     'Class' => ModificarView::class,
         // ],
         // '3' => [
         //     'Label' => Constantes::DELETE_LABEL, // 'Eliminar Registro'
-        //     'Class' => EliminarTemperaturaRegistroView::class,
+        //     'Class' => EliminarView::class,
         // ],
         // '4' => [
         //     'Label' => Constantes::LIST_LABEL, // 'Listar Registros'
-        //     'Class' => ListarTemperaturaRegistroView::class,
+        //     'Plural' => true,
+        //     'Class' => ListarView::class,
         // ],
         Constantes::BACK_OPTION => [
             'Label' => Constantes::BACK_LABEL,
