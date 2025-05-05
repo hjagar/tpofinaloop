@@ -3,8 +3,9 @@ namespace App\Interface\Administracion\TemperaturaAlarma;
 use App\Interface\FormView;
 use App\Control\TemperaturaAlarmaControl;
 use App\Interface\Componentes\Input;
+use App\Interface\Constantes;
 
-class EliminarTemperaturaAlarmaView extends FormView
+class EliminarView extends FormView
 {
     protected $title = 'Eliminar Alarma de Temperatura';    
 
@@ -16,22 +17,20 @@ class EliminarTemperaturaAlarmaView extends FormView
         );
     }
 
-    public function render()
-    {
-        $this->showTitle();
-        $this->showInputs();
-        $this->showActions();
-    }
-
     protected function save(): void
     {
         $id = $this->getInputs()[0]->getValue();
-        $this->getControlClass()->delete($id);
-        echo "Alarma de temperatura con ID {$id} eliminada.\n";
+        $returnValue = $this->getControlClass()->delete($id);
+
+        if(is_bool($returnValue) && $returnValue) {
+            $this->showSuccess(Constantes::formatMessage(Constantes::DELETE_MESSAGE, "Temperatura Alarma ID: {$id}"));           
+        } else {
+            $this->showError(Constantes::formatMessage(Constantes::DELETE_ERROR_MESSAGE, $returnValue));
+        }
     }
 
     protected function cancel(): void
     {
-        echo "Operación cancelada.\n";
+        $this->showMessage(Constantes::CANCEL_MESSAGE);
     }
 }

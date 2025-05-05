@@ -41,15 +41,15 @@ class AdministracionView extends MenuView
             'Label' => 'Temperatura Registro',
             'Class' => TemperaturaRegistroView::class,
         ],
-        '0' => [
-            'Label' => 'Volver al menú anterior',
-            'ExitMessage' => 'Volviendo al menú anterior...',
-            'Color' => "\e[1;31m",
+        Constantes::BACK_OPTION => [
+            'Label' => Constantes::BACK_LABEL,
+            'ExitMessage' => Constantes::BACK_MESSAGE,
+            'Color' => Constantes::RED_COLOR,
         ],
-        'X' => [
-            'Label' => 'Salir',
-            'ExitMessage' => 'Saliendo...',
-            'Color' => "\e[1;31m",
+        Constantes::EXIT_OPTION => [
+            'Label' => Constantes::EXIT_LABEL,
+            'ExitMessage' => Constantes::EXIT_MESSAGE,
+            'Color' => Constantes::RED_COLOR,
         ]
     ];
 }

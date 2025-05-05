@@ -1,40 +1,43 @@
 <?php
 namespace App\Interface\Administracion;
 use App\Interface\MenuView;
-use App\Interface\TemperaturaRegistro\AgregarTemperaturaRegistroView;
-use App\Interface\TemperaturaRegistro\ModificarTemperaturaRegistroView;
-use App\Interface\TemperaturaRegistro\EliminarTemperaturaRegistroView;
-use App\Interface\TemperaturaRegistro\ListarTemperaturaRegistroView;
+use App\Interface\TemperaturaRegistro\AgregarView;
+use App\Interface\TemperaturaRegistro\ModificarView;
+use App\Interface\TemperaturaRegistro\EliminarView;
+use App\Interface\TemperaturaRegistro\ListarView;
+use App\Interface\Constantes;
 
 class TemperaturaRegistroView extends MenuView
 {
     protected $title = 'Administración de Registros de Temperatura';
+    protected $label = 'Registro';
     protected $menu = [
-        '1' => [
-            'Label' => 'Agregar Registro',
-            'Class' => AgregarTemperaturaRegistroView::class,
+        // '1' => [
+        //     'Label' => Constantes::ADD_LABEL, // 'Agregar Registro'
+        //     'Class' => AgregarView::class,
+        // ],
+        // '2' => [
+        //     'Label' => Constantes::MODIFY_LABEL, // 'Modificar Registro'
+        //     'Class' => ModificarView::class,
+        // ],
+        // '3' => [
+        //     'Label' => Constantes::DELETE_LABEL, // 'Eliminar Registro'
+        //     'Class' => EliminarView::class,
+        // ],
+        // '4' => [
+        //     'Label' => Constantes::LIST_LABEL, // 'Listar Registros'
+        //     'Plural' => true,
+        //     'Class' => ListarView::class,
+        // ],
+        Constantes::BACK_OPTION => [
+            'Label' => Constantes::BACK_LABEL,
+            'ExitMessage' => Constantes::BACK_MESSAGE,
+            'Color' => Constantes::RED_COLOR,
         ],
-        '2' => [
-            'Label' => 'Modificar Registro',
-            'Class' => ModificarTemperaturaRegistroView::class,
-        ],
-        '3' => [
-            'Label' => 'Eliminar Registro',
-            'Class' => EliminarTemperaturaRegistroView::class,
-        ],
-        '4' => [
-            'Label' => 'Listar Registros',
-            'Class' => ListarTemperaturaRegistroView::class,
-        ],
-        '0' => [
-            'Label' => 'Volver al menú anterior',
-            'ExitMessage' => 'Volviendo al menú anterior...',
-            'Color' => "\e[1;31m",
-        ],
-        'X' => [
-            'Label' => 'Salir',
-            'ExitMessage' => 'Saliendo...',
-            'Color' => "\e[1;31m",
+        Constantes::EXIT_OPTION => [
+            'Label' => Constantes::EXIT_LABEL,
+            'ExitMessage' => Constantes::EXIT_MESSAGE,
+            'Color' => Constantes::RED_COLOR,
         ]
     ];
 }

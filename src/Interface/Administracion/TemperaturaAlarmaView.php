@@ -1,40 +1,43 @@
 <?php
 namespace App\Interface\Administracion;
 use App\Interface\MenuView;
-use App\Interface\Administracion\TemperaturaAlarma\AgregarTemperaturaAlarmaView;
-use App\Interface\Administracion\TemperaturaAlarma\ModificarTemperaturaAlarmaView;
-use App\Interface\Administracion\TemperaturaAlarma\EliminarTemperaturaAlarmaView;
-use App\Interface\Administracion\TemperaturaAlarma\ListarTemperaturaAlarmaView;
+use App\Interface\Administracion\TemperaturaAlarma\AgregarView;
+use App\Interface\Administracion\TemperaturaAlarma\ModificarView;
+use App\Interface\Administracion\TemperaturaAlarma\EliminarView;
+use App\Interface\Administracion\TemperaturaAlarma\ListarView;
+use App\Interface\Constantes;
 
 class TemperaturaAlarmaView extends MenuView
 {
     protected $title = 'Administración de Alarmas de Temperatura';
+    protected $label = 'Alarma';
     protected $menu = [
-        // '1' => [
-        //     'Label' => 'Agregar Alarma',
-        //     'Class' => AgregarTemperaturaAlarmaView::class,
-        // ],
+        '1' => [
+            'Label' => Constantes::ADD_LABEL, ///  'Agregar Alarma',
+            'Class' => AgregarView::class,
+        ],
         // '2' => [
-        //     'Label' => 'Modificar Alarma',
-        //     'Class' => ModificarTemperaturaAlarmaView::class,
+        //     'Label' => Constantes::MODIFY_LABEL, /// 'Modificar Alarma',
+        //     'Class' => ModificarView::class,
         // ],
         '3' => [
-            'Label' => 'Eliminar Alarma',
-            'Class' => EliminarTemperaturaAlarmaView::class,
+            'Label' => Constantes::DELETE_LABEL, /// 'Eliminar Alarma',
+            'Class' => EliminarView::class,
         ],
         '4' => [
-            'Label' => 'Listar Alarmas',
-            'Class' => ListarTemperaturaAlarmaView::class,
+            'Label' => Constantes::LIST_LABEL, /// 'Listar Alarmas',
+            'Plural' => true,
+            'Class' => ListarView::class,
         ],
-        '0' => [
-            'Label' => 'Volver al menú anterior',
-            'ExitMessage' => 'Volviendo al menú anterior...',
-            'Color' => "\e[1;31m",
+        Constantes::BACK_OPTION => [
+            'Label' => Constantes::BACK_LABEL,
+            'ExitMessage' => Constantes::BACK_MESSAGE,
+            'Color' => Constantes::RED_COLOR,
         ],
-        'X' => [
-            'Label' => 'Salir',
-            'ExitMessage' => 'Saliendo...',
-            'Color' => "\e[1;31m",
+        Constantes::EXIT_OPTION => [
+            'Label' => Constantes::EXIT_LABEL,
+            'ExitMessage' => Constantes::EXIT_MESSAGE,
+            'Color' => Constantes::RED_COLOR,
         ]
     ];
 }

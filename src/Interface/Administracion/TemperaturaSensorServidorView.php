@@ -1,40 +1,43 @@
 <?php
 namespace App\Interface\Administracion;
 use App\Interface\MenuView;
-use App\Interface\TemperaturaSensorServidor\AgregarTemperaturaSensorServidorView;
-use App\Interface\TemperaturaSensorServidor\ModificarTemperaturaSensorServidorView;
-use App\Interface\TemperaturaSensorServidor\EliminarTemperaturaSensorServidorView;
-use App\Interface\TemperaturaSensorServidor\ListarTemperaturaSensorServidorView;
+use App\Interface\TemperaturaSensorServidor\AgregarView;
+use App\Interface\TemperaturaSensorServidor\ModificarView;
+use App\Interface\TemperaturaSensorServidor\EliminarView;
+use App\Interface\TemperaturaSensorServidor\ListarView;
+use App\Interface\Constantes;
 
 class TemperaturaSensorServidorView extends MenuView
 {
     protected $title = 'Administración de Sensores de Temperatura Servidor';
+    protected $label = 'Sensor Servidor';
     protected $menu = [
-        '1' => [
-            'Label' => 'Agregar Sensor',
-            'Class' => AgregarTemperaturaSensorServidorView::class,
+        // '1' => [
+        //     'Label' => Constantes::ADD_LABEL, // 'Agregar Sensor'
+        //     'Class' => AgregarView::class,
+        // ],
+        // '2' => [
+        //     'Label' => Constantes::MODIFY_LABEL, // 'Modificar Sensor'
+        //     'Class' => ModificarView::class,
+        // ],
+        // '3' => [
+        //     'Label' => Constantes::DELETE_LABEL, // 'Eliminar Sensor'
+        //     'Class' => EliminarView::class,
+        // ],
+        // '4' => [
+        //     'Label' => Constantes::LIST_LABEL, // 'Listar Sensores'
+        //     'Plural' => true,
+        //     'Class' => ListarView::class,
+        // ],
+        Constantes::BACK_OPTION => [
+            'Label' => Constantes::BACK_LABEL,
+            'ExitMessage' => Constantes::BACK_MESSAGE,
+            'Color' => Constantes::RED_COLOR,
         ],
-        '2' => [
-            'Label' => 'Modificar Sensor',
-            'Class' => ModificarTemperaturaSensorServidorView::class,
-        ],
-        '3' => [
-            'Label' => 'Eliminar Sensor',
-            'Class' => EliminarTemperaturaSensorServidorView::class,
-        ],
-        '4' => [
-            'Label' => 'Listar Sensores',
-            'Class' => ListarTemperaturaSensorServidorView::class,
-        ],
-        '0' => [
-            'Label' => 'Volver al menú anterior',
-            'ExitMessage' => 'Volviendo al menú anterior...',
-            'Color' => "\e[1;31m",
-        ],
-        'X' => [
-            'Label' => 'Salir',
-            'ExitMessage' => 'Saliendo...',
-            'Color' => "\e[1;31m",
+        Constantes::EXIT_OPTION => [
+            'Label' => Constantes::EXIT_LABEL,
+            'ExitMessage' => Constantes::EXIT_MESSAGE,
+            'Color' => Constantes::RED_COLOR,
         ]
     ];
 }

@@ -3,18 +3,18 @@ namespace App\Interface\Componentes;
 
 class Input
 {
-    private $name;
+    private $field;
     private $label;
     private $required;
     private $value = null;
 
-    public function __construct($label, $required = false, $name = null)
+    public function __construct($label, $required = false, $field = null)
     {
-        if ($name === null) {
-            $name = $label;
+        if ($field === null) {
+            $field = $label;
         }
     
-        $this->name = $name;
+        $this->field = $field;
         $this->label = $label;
         $this->required = $required;
     }
@@ -25,17 +25,18 @@ class Input
         $value = readline($label);
 
         if ($this->isRequired() && empty($value)) {
-            echo "{$this->getName()} es requerido.\n";
+            echo "{$this->getLabel()} es requerido.\n";
             $this->show();
         } else {
             $this->setValue($value);
         }
     }
 
-    public function getName(): string
+    public function getField(): string
     {
-        return $this->name;
+        return $this->field;
     }
+    
     public function getLabel(): string
     {
         return $this->label;

@@ -3,6 +3,7 @@ namespace App\Interface;
 use App\Interface\MenuView;
 use App\Interface\AdministracionView;
 use App\Interface\ProcesosView;
+use App\Interface\Constantes;
 
 class MainView extends MenuView
 {
@@ -16,10 +17,10 @@ class MainView extends MenuView
             'Label' => 'Procesos',
             'Class' => ProcesosView::class,
         ],
-        '0' => [
-            'Label' => 'Salir',
-            'ExitMessage' => 'Saliendo...',
-            'Color' => "\e[1;31m",
+        Constantes::EXIT_OPTION => [
+            'Label' => Constantes::EXIT_LABEL,
+            'ExitMessage' => Constantes::EXIT_MESSAGE,
+            'Color' => Constantes::RED_COLOR,
         ]
     ];
 }
