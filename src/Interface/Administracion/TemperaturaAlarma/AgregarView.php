@@ -15,11 +15,11 @@ class AgregarView extends FormView
         parent::__construct(
             TemperaturaAlarmaControl::class,
             [
-                new Input('Id Sensor', true, 'idsensor'),
+                new Input('Id Sensor', true, 'idtemperaturasensor'),
                 new Input('Temperatura Superior', true, 'tasuperior'),
                 new Input('Temperatura Inferior', true, 'tainferior'),
-                new Input('Fecha y Hora de Inicio', false, 'fechainicio'),
-                new Input('Fecha y Hora de Fin', false, 'fechafin')
+                new Input('Fecha y Hora de Inicio', false, 'tafechainicio'),
+                new Input('Fecha y Hora de Fin', false, 'tafechafin')
             ]
         );
     }
@@ -32,9 +32,9 @@ class AgregarView extends FormView
         $returnValue = $this->getControlClass()->create($request);
 
         if (is_object($returnValue) && $returnValue) {
-            $this->showSuccess("Alarma de Temperatura agregada exitosamente.");
+            $this->showSuccess(Constantes::SAVE_MESSAGE, 'Alarma de Temperatura');
         } else {
-            $this->showError("Error al agregar la Alarma de Temperatura: {$returnValue}");
+            $this->showError(Constantes::formatMessage(Constantes::SAVE_ERROR_MESSAGE, $returnValue));
         }
     }
 

@@ -42,6 +42,8 @@ class Constantes
     const CANCEL_MESSAGE = "Operación cancelada.\n";
     const DELETE_MESSAGE = "Registro de %s eliminado con éxito.\n"; 
     const DELETE_ERROR_MESSAGE = "Error al eliminar: %s.\n";
+    const SAVE_MESSAGE = "Registro de %s guardado con éxito.\n";
+    const SAVE_ERROR_MESSAGE = "Error al guardar: %s.\n";
 
     public static function formatMessage($message, ...$args): string
     {

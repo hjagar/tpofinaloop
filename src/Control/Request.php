@@ -35,10 +35,7 @@ class Request
         foreach ($inputs as $input) {
             $key = $input->getField();
             $value = $input->getValue();
-
-            if (property_exists($this, $key)) {
-                $this->$key = $value;
-            }
+            $this->$key = $value;
         }
     }
 }
