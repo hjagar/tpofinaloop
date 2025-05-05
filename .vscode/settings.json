@@ -1,9 +1,0 @@
-{
-    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
-    "bladeFormatter.format.indentSize": 2,
-    "php.debug.executablePath": "C:\\repo\\laragon\\bin\\php\\php-8.4.6-Win32-vs17-x64\\php.exe",
-    "[php]": {
-        "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
-    },
-    
-}
