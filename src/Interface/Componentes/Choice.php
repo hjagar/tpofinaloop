@@ -1,45 +1,117 @@
 <?php
+
 namespace App\Interface\Componentes;
+
 use App\Interface\Componentes\Input;
 use App\Interface\Componentes\Direction;
 use App\Interface\Componentes\Separator;
+use App\Interface\Constantes;
 
 class Choice extends Input
 {
     private $options = [];
     private $direction;
+    private bool $showRequired;
+    private $color;
 
-    public function __construct($label, array $options, $required = false, $name = null, $direction = Direction::VERTICAL)
-    {    
+    public function __construct($label, array $options, $required = false, $name = null, $direction = Direction::VERTICAL, 
+        $showRequired = true, $color = null)  
+    {
         parent::__construct($label, $required, $name);
         $this->options = $options;
         $this->direction = $direction;
+        $this->showRequired = $showRequired;
+        $this->color = $color;
     }
 
-    public function show(): void
+    public function show(): bool
     {
-        echo "\e[1;34m{$this->getLabel()}: \e[0m";
-        $separator = $this->getSeparator();
+        $returnValue = false;
+        $label = $this->makeReadlinePrompt(color: Constantes::BLUE_COLOR, showRequired: $this->getShowRequired());
+        $options = $this->makeOptionsString();
+        $choicePrompt = $this->makeChoicePrompt();
+        $prompt = $this->createReadlinePrompt($label, $options, $choicePrompt);
+        $value = readline("{$prompt}");
+
+        if (!$this->isCancelInput($value)) {
+            if ($this->isRequired() && !array_key_exists($value, $this->options)) {
+                $this->showError(Constantes::formatMessage(Constantes::REQUIRED, $this->getLabel()));
+                $this->show();
+            } else {
+                $this->setValue($value);
+            }
+
+            $returnValue = true;
+        }
+
+        return $returnValue;
+    }
+    
+    private function createReadlinePrompt($label, $options, $choice){
+        $promptFirstElements = [$label, $options];
+        $labelSeparator = $this->getLabelSeparator();
+        $selectionSeparator = $this->getSelectionSeparator();
+        $promptElements = implode($labelSeparator, $promptFirstElements);
+        $promptFinalElements = [$promptElements, $choice];      
+
+        return implode($selectionSeparator, $promptFinalElements);
+    }
+
+    private function makeOptionsString(): string
+    {
+        $options = $this->getOptions();
         $optionsToShowArray = [];
+        $color = $this->getColor() ?? Constantes::GREY_COLOR;
+        $resetColor = Constantes::RESET_COLOR;
 
-        foreach ($this->options as $key => $option) {
-            $optionsToShowArray[] = "\e[1;34m{$key}. {$option}\e[0m";
+        foreach ($options as $key => $option) {
+            $optionsToShowArray[] = "{$color}{$key}. {$option}{$resetColor}";
         }
-        
-        $optionsToShowStr = implode($separator, $optionsToShowArray);
-        echo "{$optionsToShowStr}\n";
-        $value = readline("Seleccione una opción: ");
 
-        if ($this->isRequired() && !array_key_exists($value, $this->options)) {
-            echo "{$this->getName()} es requerido.\n";
-            $this->show();
-        } else {
-            $this->setValue($value);
-        }
+        return implode($this->getOptionSeparator(), $optionsToShowArray);
     }
 
-    private function getSeparator(): string
+    private function makeChoicePrompt(): string
     {
-        return $this->direction === Direction::HORIZONTAL ? Separator::DASH->value() : Separator::NEWLINE->value();
+        $color = $this->getColor() ?? Constantes::GREY_COLOR;
+        $resetColor = Constantes::RESET_COLOR;
+        $choicePrompt = Constantes::CHOICE_MESSAGE;
+
+        return "{$color}{$choicePrompt}{$resetColor} ";
+    }
+
+    private function getOptionSeparator(): string
+    {
+        return $this->getDirection() === Direction::HORIZONTAL ? Separator::PIPE->value() : Separator::NEWLINE->value();
+    }
+
+    private function getLabelSeparator(): string
+    {
+        return $this->getDirection() === Direction::HORIZONTAL ? Separator::SPACE->value() : Separator::NEWLINE->value();
+    }
+    
+    private function getSelectionSeparator(): string
+    {
+        return $this->getDirection() === Direction::HORIZONTAL ? Separator::DASH->value() : Separator::NEWLINE->value();
+    }
+    
+    private function getDirection(): Direction
+    {
+        return $this->direction;
+    }
+
+    private function getOptions(): array
+    {
+        return $this->options;
+    }
+
+    private function getShowRequired(): bool
+    {
+        return $this->showRequired;
+    }
+
+    private function getColor(): ?string
+    {
+        return $this->color;
     }
 }

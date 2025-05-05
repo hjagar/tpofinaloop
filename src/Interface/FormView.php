@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Interface;
+
 use App\Interface\ActionView;
 use App\Interface\Componentes\Choice;
 use App\Interface\Componentes\Direction;
@@ -7,12 +9,15 @@ use App\Interface\Constantes;
 
 abstract class FormView extends ActionView
 {
-    protected $inputs = [];
+    private $inputs = [];
+    private $inputsIndex = [];
+    protected $subtitle = null;
 
     public function __construct($controlClass, $inputs = [])
     {
         parent::__construct($controlClass);
         $this->inputs = $inputs;
+        $this->indexarInputs();
     }
 
     abstract protected function save(): void;
@@ -21,8 +26,12 @@ abstract class FormView extends ActionView
     public function render()
     {
         $this->showTitle();
-        $this->showInputs();
-        $this->showActions();
+        $this->showSubtitle();
+        $continue = $this->showInputs();
+
+        if ($continue) {
+            $this->showActions();
+        }
     }
 
     protected function getInputs(): array
@@ -30,12 +39,16 @@ abstract class FormView extends ActionView
         return $this->inputs;
     }
 
-    protected function showInputs(): void
+    protected function showInputs(): bool
     {
         $inputs = $this->getInputs();
-        foreach ($inputs as $input) {
-            $input->show();
+        $returnValue = true;
+
+        for ($i = 0; $i < count($inputs) && $returnValue; $i++) {
+            $returnValue = $inputs[$i]->show();
         }
+
+        return $returnValue;
     }
 
     protected function showActions(): void
@@ -43,7 +56,7 @@ abstract class FormView extends ActionView
         $action = new Choice('Acciones', [
             1 => Constantes::SAVE,
             2 => Constantes::CANCEL
-        ], true, 'Acción', Direction::HORIZONTAL);        
+        ], true, 'Acción', Direction::HORIZONTAL, false, Constantes::BLUE_COLOR);
         $action->show();
         $option = $action->getValue();
 
@@ -55,5 +68,54 @@ abstract class FormView extends ActionView
                 $this->cancel();
                 break;
         }
+    }
+
+    public function getInputByField($field): ?object
+    {
+        $inputs = $this->getInputs();
+        $inputsIndex = $this->getInputsIndex();
+        $returnValue = null;
+
+        if (array_key_exists($field, $inputsIndex)) {
+            $index = $inputsIndex[$field];
+            $returnValue = $inputs[$index];
+        }
+
+        return $returnValue;
+    }
+
+    private function getSubtitle(): ?string
+    {
+        return $this->subtitle;
+    }
+
+    private function showSubtitle(): void
+    {
+        $subtitle = $this->getSubtitle();
+        $greenColor = Constantes::GREEN_COLOR;
+        $resetColor = Constantes::RESET_COLOR;
+        echo "{$greenColor}(*) Campo requerido.{$subtitle}Presione '/' para cancelar.{$resetColor}\n";
+    }
+
+    private function getInputsIndex(): array
+    {
+        return $this->inputsIndex;
+    }
+
+    private function setInputsIndex(array $inputsIndex): void
+    {
+        $this->inputsIndex = $inputsIndex;
+    }
+
+    private function indexarInputs(): void
+    {
+        $inputs = $this->getInputs();
+        $inputsIndex = [];
+
+        foreach ($inputs as $key => $input) {
+            $inputsIndex[$input->getName()] = $key;
+        }
+
+        $this->setInputsIndex($inputsIndex);
     }
 }

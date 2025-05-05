@@ -1,5 +1,6 @@
 <?php
 namespace App\Control;
+
 class Request
 {
     private array $fields; // Fields to be used in request to controllers
@@ -33,7 +34,7 @@ class Request
     public function fill(array $inputs): void
     {
         foreach ($inputs as $input) {
-            $key = $input->getField();
+            $key = $input->getName();
             $value = $input->getValue();
             $this->$key = $value;
         }
