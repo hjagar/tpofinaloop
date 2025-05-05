@@ -29,7 +29,7 @@ class Constantes
     const GREEN_COLOR = "\e[1;32m";
     const YELLOW_COLOR = "\e[1;33m";
     const BLUE_COLOR = "\e[1;34m";
-    const GREY_COLOR = "\e[1;37m";
+    const GREY_COLOR = "\e[1;37m";    
     const RESET_COLOR = "\e[0m";
     const BOLD = "\e[1m";
     const UNDERLINE = "\e[4m";
@@ -44,6 +44,15 @@ class Constantes
     const DELETE_ERROR_MESSAGE = "Error al eliminar: %s.\n";
     const SAVE_MESSAGE = "Registro de %s guardado con éxito.\n";
     const SAVE_ERROR_MESSAGE = "Error al guardar: %s.\n";
+    const GET_ERROR_MESSAGE = "Error: %s.\n";
+    const UPDATE_SUBTITLE =  " Presione 'Enter' para mantener valor. Presione '-' para blanquear valor. ";
+    const UPDATE_MESSAGE = "Registro de %s actualizado con éxito.\n";
+    const UPDATE_ERROR_MESSAGE = "Error al actualizar: %s.\n";
+    const CHOICE_MESSAGE = "Seleccione una opción:";
+    const CHOICE_ERROR_MESSAGE = "Opción no válida.\n";
+    const REQUIRED = "%s es requerido.\n";
+    const REQUIRED_SYMBOL = "*";
+    const INPUT_INDENT = 2;
 
     public static function formatMessage($message, ...$args): string
     {

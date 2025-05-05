@@ -4,9 +4,9 @@ require __DIR__ . '/../vendor/autoload.php';
 // $mainView = new MainView();
 // $mainView->run();
 
-use App\Interface\Administracion\TemperaturaAlarma\AgregarView;
-$agregarTemperaturaAlarmaView = new AgregarView();
-$agregarTemperaturaAlarmaView->run();
+use App\Interface\Administracion\TemperaturaAlarma\ModificarView;
+$modificar = new ModificarView();
+$modificar->run();
 
 // $input = new App\Interface\Componentes\Input('Id Sensor', true, 'idsensor');
 // $input->setValue('1234567890');
