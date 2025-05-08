@@ -1,71 +1,45 @@
 <?php
+
 namespace App\Interface\Administracion\SensorTemperaturaAviso;
+
 use App\Control\AvisoAlarmaControl;
-use App\Interface\FormView;
-use App\Interface\Componentes\Select;
-use App\Interface\Componentes\UpdateInput;
-use App\Interface\Componentes\Enums\Constantes;
-use App\Control\Request;
+use App\Interface\Componentes\Controles\Input;
+use App\Interface\Componentes\Views\UpdateFormView;
+use App\Interface\Componentes\Controles\Select;
+use App\Interface\Componentes\Controles\UpdateInput;
 
-class ModificarView extends FormView
+class ModificarView extends UpdateFormView
 {
-    protected $title = 'Modificar Aviso Alarma';
-    protected $subtitle = Constantes::UPDATE_SUBTITLE;
-
     public function __construct()
     {
         parent::__construct(
             AvisoAlarmaControl::class,
             [
-                new Select('Id Temperatura Alarma', true, 'idtemperaturaalarma', fn($idtemperaturaalarma) => $this->updateInputs($idtemperaturaalarma)),
-                new UpdateInput('Id Sensor', true, 'idtemperaturasensor'),
-                new UpdateInput('Temperatura Superior', true, 'tasuperior'),
-                new UpdateInput('Temperatura Inferior', true, 'tainferior'),
-                new UpdateInput('Fecha y Hora de Inicio', false, 'tafechainicio'),
-                new UpdateInput('Fecha y Hora de Fin', false, 'tafechafin')
+                new Input('Id Aviso', true, 'idtemperaturaaviso', false),
+                new Select('Id Alarma', true, 'idtemperaturaalarma', fn($id) => $this->updateInputsMultiKey($id), false),
+                new UpdateInput('Id Aviso', true, 'idtemperaturaaviso'),
+                new UpdateInput('Id Alarma', true, 'idtemperaturaalarma')
             ]
         );
     }
 
-    public function updateInputs($idtemperaturaalarma): bool
+    private function getFirstInput()
     {
         $inputs = $this->getInputs();
-        $alarma = $this->getController()->show($idtemperaturaalarma);
-        $returnValue = true;
-
-        if ($alarma) {
-            foreach ($inputs as $input) {
-                $propertyName = $input->getName();
-
-                if ($propertyName !== 'idtemperaturaalarma') {                    
-                    $input->setOldValue($alarma->$propertyName);
-                }
-            }
-        } else {
-            $this->showError(Constantes::formatMessage(Constantes::NOT_FOUND_ERROR_MESSAGE, "Aviso Alarma {$idtemperaturaalarma}"));
-            $returnValue = false;
-        }
-
-        return $returnValue;
+        return $inputs[0];
     }
 
-    public function save(): void 
+    private function updateInputsMultiKey($idAlarma)
     {
-        $inputs = $this->getInputs();
-        $idtemperaturaalarma = $this->getInputByField('idtemperaturaalarma')->getValue();
-        $request = new Request();
-        $request->fill($inputs);
-        $returnValue = $this->getController()->update($idtemperaturaalarma, $request);
-
-        if (is_object($returnValue) && $returnValue) {
-            $this->showSuccess(Constantes::formatMessage(Constantes::UPDATE_MESSAGE, 'Aviso Alarma'));
-        } else {
-            $this->showError(Constantes::formatMessage(Constantes::UPDATE_ERROR_MESSAGE, $returnValue));
-        }
+        $idAviso = $this->getFirstInput()->getValue();
+        $this->updateInputs([$idAviso, $idAlarma]);
     }
 
-    public function cancel(): void
+    protected function prepareRequest(): array | object
     {
-        $this->showMessage(Constantes::CANCEL_MESSAGE);
+        list($idAlarma, $request) = parent::prepareRequest();
+        $idAviso = $this->getFirstInput()->getValue();
+
+        return [[$idAviso, $idAlarma], $request];
     }
 }

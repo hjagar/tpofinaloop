@@ -8,9 +8,9 @@ class Select extends Input
 {
     private $callback;
 
-    public function __construct($label, $required = false, $name = null, $callback = null)
+    public function __construct($label, $required = false, $name = null, $callback = null, $fillable = true)
     {
-        parent::__construct($label, $required, $name);
+        parent::__construct($label, $required, $name, $fillable);
         $this->callback = $callback;
     }
 

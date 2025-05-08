@@ -1,36 +1,30 @@
 <?php
+
 namespace App\Interface\Administracion\SensorTemperaturaAviso;
-use App\Interface\FormView;
+
+use App\Interface\Componentes\Views\DeleteFormView;
 use App\Control\AvisoAlarmaControl;
-use App\Interface\Componentes\Input;
-use App\Interface\Componentes\Enums\Constantes;
+use App\Interface\Componentes\Controles\Input;
+use App\Interface\Componentes\Controles\Select;
 
-class EliminarView extends FormView
+class EliminarView extends DeleteFormView
 {
-    protected $title = 'Eliminar Aviso Alarma';    
-
     public function __construct()
     {
         parent::__construct(
             AvisoAlarmaControl::class,
-            [new Input('Id Temperatura Alarma', true)]
+            'Aviso Alarma',
+            [
+                new Input('Id Aviso', true, 'idtemperaturaaviso'),
+                new Select('Id Alarma', true, 'idtemperaturaalarma', fn($id) => $this->showConfirmationMultiKey($id))
+            ]
         );
     }
 
-    protected function save(): void
+    private function showConfirmationMultiKey($idAlarma)
     {
-        $id = $this->getInputs()[0]->getValue();
-        $returnValue = $this->getController()->delete($id);
+        $idAviso = $this->getInputByField('idtemperaturaaviso')->getValue();
 
-        if(is_bool($returnValue) && $returnValue) {
-            $this->showSuccess(Constantes::formatMessage(Constantes::DELETE_MESSAGE, "Temperatura Alarma ID: {$id}"));           
-        } else {
-            $this->showError(Constantes::formatMessage(Constantes::DELETE_ERROR_MESSAGE, $returnValue));
-        }
-    }
-
-    protected function cancel(): void
-    {
-        $this->showMessage(Constantes::CANCEL_MESSAGE);
+        $this->showConfirmation([$idAviso, $idAlarma]);
     }
 }

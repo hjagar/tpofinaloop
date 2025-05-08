@@ -11,11 +11,22 @@ abstract class DeleteFormView extends FormView
         parent::__construct("Eliminar {$entity}", $controlClass, $entity, inputs: $inputs);
     }
 
-    public function save(): void
+    protected function save(): void
     {
-        list($id, $request) = $this->prepareRequest();
+        $id = $this->prepareRequest();
         $response = $this->getController()->delete($id);
         $result = $this->verifyResponse($response);
+    }
+
+    protected function prepareRequest(): int | array
+    {
+        $returnValue = array_map(fn($input) => $input->getValue(), $this->getInputs());
+
+        if (count($returnValue) === 1) {
+            $returnValue = $returnValue[0];
+        }
+
+        return $returnValue;
     }
 
     protected function processResult($result)

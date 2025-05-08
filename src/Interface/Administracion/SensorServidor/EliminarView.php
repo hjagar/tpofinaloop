@@ -1,36 +1,19 @@
 <?php
+
 namespace App\Interface\Administracion\SensorServidor;
-use App\Interface\FormView;
+
+use App\Interface\Componentes\Views\DeleteFormView;
 use App\Control\SensorServidorControl;
-use App\Interface\Componentes\Input;
-use App\Interface\Componentes\Enums\Constantes;
+use App\Interface\Componentes\Controles\Select;
 
-class EliminarView extends FormView
+class EliminarView extends DeleteFormView
 {
-    protected $title = 'Eliminar Sensor Servidor';    
-
     public function __construct()
     {
         parent::__construct(
             SensorServidorControl::class,
-            [new Input('Id Temperatura Alarma', true)]
+            'Sensor Servidor',
+            [new Select('Id Sensor', true, 'idtemperaturasensor', fn($id) => $this->showConfirmation($id))]
         );
-    }
-
-    protected function save(): void
-    {
-        $id = $this->getInputs()[0]->getValue();
-        $returnValue = $this->getController()->delete($id);
-
-        if(is_bool($returnValue) && $returnValue) {
-            $this->showSuccess(Constantes::formatMessage(Constantes::DELETE_MESSAGE, "Temperatura Alarma ID: {$id}"));           
-        } else {
-            $this->showError(Constantes::formatMessage(Constantes::DELETE_ERROR_MESSAGE, $returnValue));
-        }
-    }
-
-    protected function cancel(): void
-    {
-        $this->showMessage(Constantes::CANCEL_MESSAGE);
     }
 }

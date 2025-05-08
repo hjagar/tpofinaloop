@@ -1,7 +1,9 @@
 <?php
 namespace App\Interface\Administracion\SensorServidor;
-use App\Interface\ListView;
+use App\Interface\Componentes\Views\ListView;
 use App\Control\SensorServidorControl;
+use App\Interface\Componentes\Controles\Column;
+use App\Interface\Componentes\Enums\Align;
 
 class ListarView extends ListView
 {
@@ -18,28 +20,14 @@ class ListarView extends ListView
 
     public function __construct()
     {
-        parent::__construct(SensorServidorControl::class);
-    }
-
-    public function render()
-    {
-        $alarmas = $this->getController()->index();
-        $this->showTitle();
-        $this->showData($alarmas);
-    }
-
-    protected function prepareDataRow($row): array
-    {
-        $columns = $this->getColumns();
-        $rowToShow = [
-            $this->prepareDataColumn($row->idtemperaturaalarma, $columns[0]),
-            $this->prepareDataColumn($row->idtemperaturasensor, $columns[1]),
-            $this->prepareDataColumn($row->tasuperior, $columns[2]),
-            $this->prepareDataColumn($row->tainferior, $columns[3]),
-            $this->prepareDataColumn($row->tafechainicio, $columns[4]),
-            $this->prepareDataColumn($row->tafechafin, $columns[5])
-        ];
-
-        return $rowToShow;
+        parent::__construct(
+            'Sensores de Servidor',
+            SensorServidorControl::class,
+            'Sensor Servidor',
+            [
+                new Column('Id Sensor', 'idtemperaturasensor'),
+                new Column('Porcentaje Perdida', 'tssporcentajeperdida', align: Align::RIGHT)
+            ]
+        );
     }
 }

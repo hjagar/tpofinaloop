@@ -14,7 +14,7 @@ abstract class UpdateFormView extends FormView
         parent::__construct("Modificar {$entity}", $controlClass, $entity, Constantes::UPDATE_SUBTITLE, $inputs);
     }
 
-    protected function getData($id)
+    private function getData($id)
     {
         $data = $this->getController()->show($id);
 
