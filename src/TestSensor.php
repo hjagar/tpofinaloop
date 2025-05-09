@@ -33,6 +33,23 @@ require __DIR__ . '/../vendor/autoload.php';
 // $agregar = new AgregarView();
 // $agregar->run();
 
-use App\Modelo\RawQuery;
-$data = RawQuery::query("SELECT * FROM w_temperaturasensor as s inner join w_temperaturaalarmas as a on s.idtemperaturasensor = a.idtemperaturasensor");
-print_r($data);
+// use App\Modelo\RawQuery;
+// $data = RawQuery::query("SELECT * FROM w_temperaturasensor as s inner join w_temperaturaalarmas as a on s.idtemperaturasensor = a.idtemperaturasensor");
+// print_r($data);
+
+
+// use App\Control\ReportControl;
+// $report = new ReportControl();
+// $response = $report->registroTemperaturaInferior(1);
+// var_dump($response);
+
+// $response = $report->registroTemperaturaSuperior(1);
+// var_dump($response);
+
+use App\Interface\Reportes\RegistroTemperaturaInferiorView;
+$view = new RegistroTemperaturaInferiorView();
+$view->run();
+
+use App\Interface\Reportes\RegistroTemperaturaSuperiorView;
+$view = new RegistroTemperaturaSuperiorView();
+$view->run();

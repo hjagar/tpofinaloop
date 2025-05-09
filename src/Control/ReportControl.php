@@ -47,7 +47,7 @@ class ReportControl extends Control
                 AND tr.tltemperatura > ta.tasuperior";
 
             $data = RawQuery::query($sql);
-            $this->ok($data);
+            $returnValue = $this->ok($data);
         } catch (\Exception $e) {
             $this->fail($e->getMessage());
         }
@@ -68,13 +68,14 @@ class ReportControl extends Control
                 WHERE tr.idtemperaturasensor = {$idsensor}";
 
             $data = RawQuery::query($sql);
-            $this->ok($data);
+            $returnValue = $this->ok($data);
         } catch (\Exception $e) {
             $this->fail($e->getMessage());
         }
 
         return $returnValue;
     }
+
     public function registroMayorValor($idsensor)
     {
         $returnValue = null;
@@ -88,7 +89,7 @@ class ReportControl extends Control
                 WHERE tr.idtemperaturasensor = {$idsensor}";
 
             $data = RawQuery::query($sql);
-            $this->ok($data);
+            $returnValue = $this->ok($data);
         } catch (\Exception $e) {
             $this->fail($e->getMessage());
         }

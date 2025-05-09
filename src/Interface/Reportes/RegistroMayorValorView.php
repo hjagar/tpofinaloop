@@ -16,14 +16,14 @@ class RegistroTemperaturaMayorView extends SearchListView
             ReportControl::class,
             'Reporte Registros Temperatura Mayor',
             [
-                new Column('Id Sensor', 'idsensortemperatura'),
+                new Column('Id Sensor', 'idtemperaturasensor'),
                 new Column('Código', 'tscodigo'),
                 new Column('Ubicación', 'tsubicacion'),
                 new Column('Fecha', 'tltemperatura'),
                 new Column('Temperatura', 'temperatura')
             ],
             [
-                new Input('Id Sensor', true, 'idsensortemperatura', false)
+                new Input('Id Sensor', true, 'idtemperaturasensor', false)
             ],
             'registroTemperaturaMayor'
         );
