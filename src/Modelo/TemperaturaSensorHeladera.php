@@ -3,7 +3,7 @@ namespace App\Modelo;
 use App\Modelo\Model;
 use App\Modelo\TemperaturaSensor;
 
-class TemperaturaSensorHeladera extends Model {
+class TemperaturaSensorHeladera extends TemperaturaSensor {
     protected static string $table = 'w_temperaturasensorheladera';
     protected static string | array $primaryKey = 'idtemperaturasensor';
     protected static bool $autoIncrement = false;

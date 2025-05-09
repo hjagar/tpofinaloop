@@ -91,7 +91,7 @@ abstract class Model
         return $transformedConditions;
     }
 
-    private static function mapToObject(array $data): static
+    protected static function mapToObject(array $data): static
     {
         $object = new static();
         $object->setFields($data);

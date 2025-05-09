@@ -29,6 +29,10 @@ require __DIR__ . '/../vendor/autoload.php';
 // $listar = new ListarView();
 // $listar->run();
 
-use App\Interface\Administracion\Sensor\AgregarView;
-$agregar = new AgregarView();
-$agregar->run();
+// use App\Interface\Administracion\Sensor\AgregarView;
+// $agregar = new AgregarView();
+// $agregar->run();
+
+use App\Modelo\RawQuery;
+$data = RawQuery::query("SELECT * FROM w_temperaturasensor as s inner join w_temperaturaalarmas as a on s.idtemperaturasensor = a.idtemperaturasensor");
+print_r($data);
