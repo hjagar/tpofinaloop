@@ -3,18 +3,18 @@
 namespace App\Interface\Administracion;
 
 use App\Interface\Componentes\Views\MenuView;
-use App\Interface\Administracion\SensorHeladera\AgregarView;
-use App\Interface\Administracion\SensorHeladera\ModificarView;
-use App\Interface\Administracion\SensorHeladera\EliminarView;
-use App\Interface\Administracion\SensorHeladera\ListarView;
+use App\Interface\Administracion\AvisoAlarma\AgregarView;
+use App\Interface\Administracion\AvisoAlarma\ModificarView;
+use App\Interface\Administracion\AvisoAlarma\EliminarView;
+use App\Interface\Administracion\AvisoAlarma\ListarView;
 use App\Interface\Componentes\Enums\Constantes;
 
-class SensorHeladeraMenuView extends MenuView
+class AvisoAlarmaMenuView extends MenuView
 {
     public function __construct()
     {
         parent::__construct(
-            'Administración de Sensor Heladera',
+            'Administración de Avisos y Alarmas',
             [
                 '1' => [
                     'Label' => Constantes::ADD_LABEL, // 'Agregar Sensor'
@@ -35,7 +35,7 @@ class SensorHeladeraMenuView extends MenuView
                 ],
                 Constantes::BACK_OPTION => [
                     'Label' => Constantes::BACK_LABEL,
-                    'ExitMessage' => "Volviendo al menú anterior...",
+                    'ExitMessage' => Constantes::BACK_MESSAGE,
                     'Color' => Constantes::RED_COLOR,
                 ],
                 Constantes::EXIT_OPTION => [
@@ -43,9 +43,8 @@ class SensorHeladeraMenuView extends MenuView
                     'ExitMessage' => Constantes::EXIT_MESSAGE,
                     'Color' => Constantes::RED_COLOR,
                 ]
-
             ],
-            'Sensor Heladera'
+            'Aviso Alarma'
         );
     }
 }

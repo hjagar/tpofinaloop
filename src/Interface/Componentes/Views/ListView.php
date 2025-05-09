@@ -34,7 +34,7 @@ abstract class ListView extends ActionView
         return array_map(fn($col) => $col->getLabel(), $columns);
     }
 
-    private function getData(): array
+    protected function getData(): array
     {
         $response = $this->getController()->index();
         $returnValue = $this->verifyResponse($response);
@@ -96,7 +96,7 @@ abstract class ListView extends ActionView
         echo " {$rowToShow}\n";
     }
 
-    private function showData(array | bool $data): void
+    protected function showData(array | bool $data): void
     {
         if (is_array($data)) {
             $this->showHeader();

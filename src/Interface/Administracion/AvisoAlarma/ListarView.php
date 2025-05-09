@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Interface\Administracion\SensorTemperaturaAviso;
+namespace App\Interface\Administracion\AvisoAlarma;
 
 use App\Interface\Componentes\Views\ListView;
 use App\Control\AvisoAlarmaControl;

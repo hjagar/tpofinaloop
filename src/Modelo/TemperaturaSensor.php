@@ -55,5 +55,10 @@ class TemperaturaSensor extends Model {
 
         return $heladera;
     }
+
+    public function perdidaPorFallo() 
+    {
+        return $this->tselementosresguardan * $this->tsmontoresguardado;
+    }
 }
 ?>

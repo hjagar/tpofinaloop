@@ -3,10 +3,10 @@
 namespace App\Interface\Administracion;
 
 use App\Interface\Componentes\Views\MenuView;
-use App\Interface\Aviso\AgregarAvisoView;
-use App\Interface\Aviso\ModificarAvisoView;
-use App\Interface\Aviso\EliminarAvisoView;
-use App\Interface\Aviso\ListarAvisoView;
+use App\Interface\Administracion\Aviso\AgregarView;
+use App\Interface\Administracion\Aviso\ModificarView;
+use App\Interface\Administracion\Aviso\EliminarView;
+use App\Interface\Administracion\Aviso\ListarView;
 use App\Interface\Componentes\Enums\Constantes;
 
 class AvisoMenuView extends MenuView
@@ -16,23 +16,23 @@ class AvisoMenuView extends MenuView
         parent::__construct(
             'Administración de Avisos',
             [
-                // '1' => [
-                //     'Label' => Constantes::ADD_LABEL, // 'Agregar Aviso'
-                //     'Class' => AgregarView::class,
-                // ],
-                // '2' => [
-                //     'Label' => Constantes::MODIFY_LABEL, // 'Modificar Aviso'
-                //     'Class' => ModificarView::class,,
-                // ],
-                // '3' => [
-                //     'Label' => Constantes::DELETE_LABEL, // 'Eliminar Aviso'
-                //     'Class' => EliminarView::class,,
-                // ],
-                // '4' => [
-                //     'Label' => Constantes::LIST_LABEL, // 'Listar Avisos'\
-                //     'Plural' => true,
-                //     'Class' => ListarView::class,
-                // ],
+                '1' => [
+                    'Label' => Constantes::ADD_LABEL, // 'Agregar Aviso'
+                    'Class' => AgregarView::class,
+                ],
+                '2' => [
+                    'Label' => Constantes::MODIFY_LABEL, // 'Modificar Aviso'
+                    'Class' => ModificarView::class,
+                ],
+                '3' => [
+                    'Label' => Constantes::DELETE_LABEL, // 'Eliminar Aviso'
+                    'Class' => EliminarView::class,
+                ],
+                '4' => [
+                    'Label' => Constantes::LIST_LABEL, // 'Listar Avisos'\
+                    'Plural' => true,
+                    'Class' => ListarView::class,
+                ],
                 Constantes::BACK_OPTION => [
                     'Label' => Constantes::BACK_LABEL,
                     'ExitMessage' => Constantes::BACK_MESSAGE,

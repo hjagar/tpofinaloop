@@ -24,6 +24,11 @@ class Constantes
     const MODIFY_LABEL = "Modificar %s";
     const DELETE_LABEL = "Eliminar %s";
     const PLURAL_MESSAGE = "%ss";
+    const REGISTRO_TEMPERATURA_INFERIOR = "Registros de temperatura inferior";
+    const REGISTRO_TEMPERATURA_SUPERIOR = "Registros de temperatura superior";
+    const REGISTRO_TEMPERATURA_MENOR = "Registros de temperatura menor";
+    const REGISTRO_TEMPERATURA_MAYOR = "Registros de temperatura mayor";
+
 
     // Constantes de formateo de texto
     const RED_COLOR = "\e[1;31m";
