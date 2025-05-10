@@ -5,11 +5,15 @@ namespace App\Interface\Componentes\Enums;
 class Constantes
 {
     // Constantes de la aplicación
-    const APP_NAME = "Sistema de Gestión de Alarmas";
+    const APP_NAME = "Sistema de Monitoreo de Temperatura";
     const APP_VERSION = "1.0.0";
     const APP_AUTHOR = "Gonzalo Molina";
 
     // Constantes de Menús
+    const MENU_PRINCIPAL = "Menú Principal";
+    const ADMINISTRACION_LABEL = "Administración de Sistema";
+    const REPORTES_LABEL = "Reportes";
+
     const SELECT_OPTION = "Seleccione una opción: ";
     const FEATURE_NOT_IMPLEMENTED = "Funcionalidad no implementada %s.\n";
     const INVALID_OPTION = "Opción no válida.\n";

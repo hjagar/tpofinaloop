@@ -4,7 +4,7 @@ namespace App\Interface;
 
 use App\Interface\Componentes\Views\MenuView;
 use App\Interface\AdministracionMenuView;
-use App\Interface\ProcesosMenuView;
+use App\Interface\ReportesMenuView;
 use App\Interface\Componentes\Enums\Constantes;
 
 class MainMenuView extends MenuView
@@ -12,15 +12,15 @@ class MainMenuView extends MenuView
     public function __construct()
     {
         parent::__construct(
-            'Sistema de Monitoreo de Temperatura',
+            Constantes::MENU_PRINCIPAL,
             [
                 '1' => [
-                    'Label' => 'Administración',
+                    'Label' => Constantes::ADMINISTRACION_LABEL,
                     'Class' => AdministracionMenuView::class,
                 ],
                 '2' => [
-                    'Label' => 'Procesos',
-                    'Class' => ProcesosMenuView::class,
+                    'Label' => Constantes::REPORTES_LABEL,
+                    'Class' => ReportesMenuView::class,
                 ],
                 Constantes::EXIT_OPTION => [
                     'Label' => Constantes::EXIT_LABEL,

@@ -127,6 +127,8 @@ abstract class ListView extends ActionView
 
     protected function render()
     {
+        $this->clearScreen();
+        $this->showApplicationTitle();
         $data = $this->getData();
         $this->showTitle();
         $this->showData($data);

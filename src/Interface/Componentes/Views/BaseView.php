@@ -2,6 +2,7 @@
 
 namespace App\Interface\Componentes\Views;
 
+use App\Interface\Componentes\Controles\Cursor;
 use App\Interface\Componentes\Enums\Constantes;
 
 abstract class BaseView
@@ -27,6 +28,74 @@ abstract class BaseView
     }
 
     abstract protected function render();
+
+    protected function clearScreen(): void
+    {
+        echo "\033[2J\033[H";
+
+        if (strncasecmp(PHP_OS, 'WIN', 3) === 0) {
+            system('cls');
+        }
+    }
+
+    protected function getHorizontalDoubleLine()
+    {
+        return str_repeat("═", 85);
+    }
+
+    protected function showAppUpperLine()
+    {
+        $hLine = $this->getHorizontalDoubleLine();
+        echo "╔{$hLine}╗\n";
+    }
+
+    protected function showAppMiddleLine()
+    {
+        $hLine = $this->getHorizontalDoubleLine();
+        echo "╠{$hLine}╣\n";
+    }
+
+    protected function showLeftRightDoubleBorders($text, $pad = 0)
+    {
+        $padText = "";
+
+        if ($pad !== 0) {
+            $padText = str_repeat(" ", 85 - $pad);
+        }
+        //$text = str_pad($text, 85 + $extrPad);
+        echo "║{$text}{$padText}║\n";
+    }
+
+    protected function showBottomLine($text, $pad = 0, $prompt = false) {
+        $padText = "";
+
+        if ($pad !== 0) {
+            $padText = str_repeat(" ", 85 - $pad);
+        }
+        //$text = str_pad($text, 85 + $extrPad);
+        echo "║{$text}{$padText}║\n";
+        $hline = $this->getHorizontalDoubleLine();
+        echo "╚{$hline}╝";
+
+        if ($prompt){
+            Cursor::up();
+            Cursor::first();
+            Cursor::right($pad + 1);
+        }
+    }
+
+    protected function showApplicationTitle()
+    {
+        $blue = $this->getBlueColor();
+        $reset = $this->getResetColor();
+        $appName = Constantes::APP_NAME;
+        $appVersion = Constantes::APP_VERSION;
+        $author = Constantes::APP_AUTHOR;
+        $this->showAppUpperLine();
+        //echo "║{$blue}{$appName}. Versión: {$appVersion}. - Programada por: {$author}{$reset}║\n";
+        $this->showLeftRightDoubleBorders("{$blue}{$appName}. Versión: {$appVersion}. - Programado por: {$author}{$reset}");
+        $this->showAppMiddleLine();
+    }
 
     protected function getTitle(): string
     {
@@ -58,9 +127,20 @@ abstract class BaseView
         return $this->appColors['error'];
     }
 
+    protected function textPad($text)
+    {
+        return str_pad($text, 85);
+    }
+
+    protected function plainOptionLength($message)
+    {
+        return mb_strlen("{$message}");
+    }
+
     protected function showTitle(): void
     {
         $title = $this->getTitle();
+        $titleLength = $this->plainOptionLength($title);
 
         if (empty($title)) {
             $title = Constantes::APP_NAME;
@@ -68,7 +148,8 @@ abstract class BaseView
 
         $blue = $this->getBlueColor();
         $reset = $this->getResetColor();
-        echo "{$blue}{$title}{$reset}\n";
+        //echo "{$blue}{$title}{$reset}\n";
+        $this->showLeftRightDoubleBorders("{$blue}{$title}{$reset}", $titleLength);
     }
 
     protected function showError($message): void

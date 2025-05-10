@@ -31,6 +31,8 @@ abstract class FormView extends ActionView
 
     public function render()
     {
+        $this->clearScreen();
+        $this->showApplicationTitle();
         $this->showTitle();
         $this->showSubtitle();
         $continue = $this->showInputs();

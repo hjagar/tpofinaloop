@@ -4,6 +4,7 @@ namespace App\Interface\Componentes\Views;
 
 use App\Interface\Componentes\Views\BaseView;
 use App\Interface\Componentes\Enums\Constantes;
+use App\Interface\Componentes\Controles\Cursor;
 
 abstract class MenuView extends BaseView
 {
@@ -20,13 +21,16 @@ abstract class MenuView extends BaseView
     protected function render()
     {
         do {
+            $this->clearScreen();
+            $this->showApplicationTitle();
             $this->showMenu();
-            $option = readline(Constantes::SELECT_OPTION);
+            $len = $this->plainOptionLength(Constantes::SELECT_OPTION);
+            $option = readline($this->showBottomLine(Constantes::SELECT_OPTION, $len, true));
             $option = strtoupper(trim($option));
 
-            if (array_key_exists($option, $this->menu)) {
+            if (array_key_exists($option, $this->getMenu())) {
                 if ($option !== '0' && $option !== 'X') {
-                    $className = $this->menu[$option]['Class'];
+                    $className = $this->getMenu()[$option]['Class'];
                     if (class_exists($className)) {
                         $classInstance = new $className();
                         $classInstance->run();
@@ -34,7 +38,7 @@ abstract class MenuView extends BaseView
                         $this->showError(Constantes::formatMessage(Constantes::FEATURE_NOT_IMPLEMENTED, $className));
                     }
                 } else {
-                    echo $this->menu[$option]['ExitMessage'] . "\n";
+                    echo $this->getMenu()[$option]['ExitMessage'] . "\n";
 
                     if ($option === 'X') {
                         exit(0); // Salir del programa
@@ -88,9 +92,11 @@ abstract class MenuView extends BaseView
         $plural = $this->getPlural();
         $label = $menuItem['Plural'] ?? false ? "{$label}{$plural}" : $label;
         $labelColor = $menuItem['Color'] ?? "";
-        $optionColor = $menuItem['Color'] ?? "\e[1;34m";
-        $message = "{$labelColor}{$label}\e[0m";
-
-        echo "{$optionColor}{$opcion}\e[0m. {$message}\n";
+        $optionColor = $menuItem['Color'] ?? Constantes::BLUE_COLOR;
+        $reset = Constantes::RESET_COLOR;
+        $message = "{$labelColor}{$label}{$reset}";
+        $plainOptionLength = $this->plainOptionLength("{$opcion}. {$label}");
+        //echo "{$optionColor}{$opcion}{$reset}. {$message}\n";
+        $this->showLeftRightDoubleBorders("{$optionColor}{$opcion}{$reset}. {$message}", $plainOptionLength);
     }
 }

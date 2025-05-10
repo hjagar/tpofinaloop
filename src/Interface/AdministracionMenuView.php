@@ -16,7 +16,7 @@ class AdministracionMenuView extends MenuView
 {
     public function __construct()
     {
-        parent::__construct('Administración de Sistema', [
+        parent::__construct(Constantes::ADMINISTRACION_LABEL, [
             '1' => [
                 'Label' => 'Sensor',
                 'Class' => SensorMenuView::class,

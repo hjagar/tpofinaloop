@@ -58,6 +58,9 @@ abstract class SearchListView extends ListView
 
     protected function render()
     {
+        $this->clearScreen();
+        $this->showApplicationTitle();
+        $this->showTitle();
         $this->showFilters();
         $data = $this->getData();
         $this->showTitle();
