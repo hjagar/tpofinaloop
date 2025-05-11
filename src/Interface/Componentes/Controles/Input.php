@@ -27,7 +27,7 @@ class Input
         $redColor = Constantes::RED_COLOR;
         $requiredSymbol = Constantes::REQUIRED_SYMBOL;
         $inputIndent = str_repeat(' ', Constantes::INPUT_INDENT);
-        $required = $this->isRequired() && $showRequired ?  "{$redColor}{$requiredSymbol} {$resetColor}" : $inputIndent;
+        $required = $this->isRequired() && $showRequired ?  "{$redColor}{$requiredSymbol}{$resetColor} " : $inputIndent;
         $label = $color ? "{$color}{$labelBegin}{$resetColor}" : "{$labelBegin}{$labelEnd}";
 
         return "{$required}{$label}:";
@@ -42,7 +42,7 @@ class Input
     {
         $returnValue = false;
         $label = $this->makeReadlinePrompt();
-        $value = readline("{$label} ");
+        $value = readline(Screen::showBottomLine("{$label}", Screen::plainLength("{$label}"), true) );
 
         if (!$this->isCancelInput($value)) {
             if ($this->isRequired() && empty($value)) {

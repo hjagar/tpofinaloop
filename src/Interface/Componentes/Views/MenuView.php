@@ -5,6 +5,7 @@ namespace App\Interface\Componentes\Views;
 use App\Interface\Componentes\Views\BaseView;
 use App\Interface\Componentes\Enums\Constantes;
 use App\Interface\Componentes\Controles\Cursor;
+use App\Interface\Componentes\Controles\Screen;
 
 abstract class MenuView extends BaseView
 {
@@ -21,11 +22,11 @@ abstract class MenuView extends BaseView
     protected function render()
     {
         do {
-            $this->clearScreen();
+            Screen::clearScreen();
             $this->showApplicationTitle();
             $this->showMenu();
-            $len = $this->plainOptionLength(Constantes::SELECT_OPTION);
-            $option = readline($this->showBottomLine(Constantes::SELECT_OPTION, $len, true));
+            $len = Screen::plainLength(Constantes::SELECT_OPTION);
+            $option = readline(Screen::showBottomLine(Constantes::SELECT_OPTION, $len, true));
             $option = strtoupper(trim($option));
 
             if (array_key_exists($option, $this->getMenu())) {
@@ -95,8 +96,8 @@ abstract class MenuView extends BaseView
         $optionColor = $menuItem['Color'] ?? Constantes::BLUE_COLOR;
         $reset = Constantes::RESET_COLOR;
         $message = "{$labelColor}{$label}{$reset}";
-        $plainOptionLength = $this->plainOptionLength("{$opcion}. {$label}");
+        $plainOptionLength = Screen::plainLength("{$opcion}. {$label}");
         //echo "{$optionColor}{$opcion}{$reset}. {$message}\n";
-        $this->showLeftRightDoubleBorders("{$optionColor}{$opcion}{$reset}. {$message}", $plainOptionLength);
+        Screen::showLeftRightDoubleBorders("{$optionColor}{$opcion}{$reset}. {$message}", $plainOptionLength);
     }
 }

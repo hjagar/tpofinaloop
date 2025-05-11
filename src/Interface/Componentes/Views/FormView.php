@@ -7,6 +7,7 @@ use App\Interface\Componentes\Controles\Choice;
 use App\Interface\Componentes\Enums\Direction;
 use App\Interface\Componentes\Enums\Constantes;
 use App\Control\Request;
+use App\Interface\Componentes\Controles\Screen;
 
 abstract class FormView extends ActionView
 {
@@ -31,7 +32,7 @@ abstract class FormView extends ActionView
 
     public function render()
     {
-        $this->clearScreen();
+        Screen::clearScreen();
         $this->showApplicationTitle();
         $this->showTitle();
         $this->showSubtitle();
@@ -102,7 +103,9 @@ abstract class FormView extends ActionView
         $subtitle = $this->getSubtitle();
         $green = $this->getGreenColor();
         $reset = $this->getResetColor();
-        echo "{$green}(*) Campo requerido.{$subtitle} Presione '/' para cancelar.{$reset}\n";
+        $subtitlePlain = "(*) Campo requerido.{$subtitle} Presione '/' para cancelar.";
+        $subtitleLength = Screen::plainLength($subtitlePlain);
+        Screen::showLeftRightDoubleBorders("{$green}(*) Campo requerido.{$subtitle} Presione '/' para cancelar.{$reset}", $subtitleLength);
     }
 
     private function getInputsIndex(): array
