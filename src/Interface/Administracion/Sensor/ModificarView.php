@@ -13,6 +13,7 @@ class ModificarView extends UpdateFormView
     {
         parent::__construct(
             SensorControl::class,
+            'Sensor',
             [
                 new Select('Id Sensor', true, 'idtemperaturasensor', fn($id) => $this->updateInputs($id)),
                 new UpdateInput('Código', true, 'tscodigo'),

@@ -15,10 +15,10 @@ class ListarView extends ListView
             'Sensor',
             [
                 new Column('Id Sensor', 'idtemperaturasensor'),
-                new Column('Código', 'tscodigo'),
-                new Column('Ubicación', 'tsubicacion'),
+                new Column('Código Sensor', 'tscodigo'),
+                new Column('Ubicación Sensor', 'tsubicacion'),
                 new Column('Elementos Resguardan', 'tselementosresguardan', align: Align::RIGHT),
-                new Column('Monto Resguardado', 'tsmontoresguardado')
+                new Column('Monto Resguardado', 'tsmontoresguardado', align: Align::RIGHT)
             ]
         );
     }

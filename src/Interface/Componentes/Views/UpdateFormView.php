@@ -16,7 +16,8 @@ abstract class UpdateFormView extends FormView
 
     private function getData($id)
     {
-        $data = $this->getController()->show($id);
+        $response = $this->getController()->show($id);
+        $data = $this->verifyResponse($response);
 
         return $data;
     }

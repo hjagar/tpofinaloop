@@ -8,13 +8,14 @@ class Column
 {
     private array $properties;
 
-    public function __construct($label, $field, $width = 0, $align = Align::LEFT)
+    public function __construct($label, $field, $width = 0, $align = Align::LEFT, $format = null)
     {
         $this->properties = [
             'label' => $label,
             'field' => $field,
             'width' => $width,
-            'align' => $align
+            'align' => $align,
+            'format' => $format
         ];
     }
 

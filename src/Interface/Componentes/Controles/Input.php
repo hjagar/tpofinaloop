@@ -11,6 +11,7 @@ class Input
     private $required;
     private $value = null;
     private $fillable;
+    private $labelLength;
 
     public function __construct($label, $required = false, $name = null, $fillable = true)
     {
@@ -18,6 +19,17 @@ class Input
         $this->required = $required;
         $this->name = $name;
         $this->fillable = $fillable;
+        $this->labelLength = Screen::plainLength("    {$label}");
+    }
+
+    protected function plainReadlinePromptLength($label, $showRequired)
+    {
+        $requiredSymbol = Constantes::REQUIRED_SYMBOL;
+        $inputIndent = str_repeat(' ', Constantes::INPUT_INDENT);
+        $plainRequired = $this->isRequired() && $showRequired ? $requiredSymbol : $inputIndent;
+        $plainLabelLength = Screen::plainLength("{$plainRequired} {$label}");
+
+        return $plainLabelLength;
     }
 
     public function makeReadlinePrompt($labelEnd = null, $color = null, $showRequired = true): string
@@ -27,10 +39,10 @@ class Input
         $redColor = Constantes::RED_COLOR;
         $requiredSymbol = Constantes::REQUIRED_SYMBOL;
         $inputIndent = str_repeat(' ', Constantes::INPUT_INDENT);
-        $required = $this->isRequired() && $showRequired ?  "{$redColor}{$requiredSymbol} {$resetColor}" : $inputIndent;
+        $required = $this->isRequired() && $showRequired ?  "{$redColor}{$requiredSymbol}{$resetColor} " : $inputIndent;
         $label = $color ? "{$color}{$labelBegin}{$resetColor}" : "{$labelBegin}{$labelEnd}";
 
-        return "{$required}{$label}:";
+        return "{$required}{$label}: ";
     }
 
     public function isCancelInput($value): bool
@@ -42,8 +54,8 @@ class Input
     {
         $returnValue = false;
         $label = $this->makeReadlinePrompt();
-        $value = readline("{$label} ");
-
+        $value = readline(Screen::showBottomLine("{$label}", $this->getLabelLength(), true));
+        Screen::redrawRightLine();
         if (!$this->isCancelInput($value)) {
             if ($this->isRequired() && empty($value)) {
                 $this->showError(Constantes::formatMessage(Constantes::REQUIRED, $this->getLabel()));
@@ -91,5 +103,10 @@ class Input
     public function getFillable(): bool
     {
         return $this->fillable;
+    }
+
+    public function getLabelLength(): int
+    {
+        return $this->labelLength;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Interface\Componentes\Views;
 
+use App\Interface\Componentes\Controles\Screen;
 use App\Interface\Componentes\Enums\Constantes;
 
 abstract class DeleteFormView extends FormView
@@ -46,7 +47,9 @@ abstract class DeleteFormView extends FormView
 
     protected function getData($id)
     {
-        $data = $this->getController()->show($id);
+        $response = $this->getController()->show($id);
+        $data = $this->verifyResponse($response);
+
         return $data;
     }
 
@@ -56,8 +59,10 @@ abstract class DeleteFormView extends FormView
         $fields = $data->getFields();
         $fieldValues = array_values($fields);
         $flatFieldValues = implode(', ', $fieldValues);
-        $this->showMessage(
-            Constantes::formatMessage(Constantes::DELETE_CONFIRMATION_MESSAGE, $this->getEntity(), $flatFieldValues)
-        );
+        $message = Constantes::formatMessage(Constantes::DELETE_CONFIRMATION_MESSAGE, $this->getEntity(), $flatFieldValues);
+        $messageLength = Screen::plainLength($message);
+        Screen::showLeftRightDoubleBorders($message, $messageLength);
+
+        return true;
     }
 }

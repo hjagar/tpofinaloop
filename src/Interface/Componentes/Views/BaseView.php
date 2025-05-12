@@ -2,6 +2,8 @@
 
 namespace App\Interface\Componentes\Views;
 
+use App\Interface\Componentes\Controles\Cursor;
+use App\Interface\Componentes\Controles\Screen;
 use App\Interface\Componentes\Enums\Constantes;
 
 abstract class BaseView
@@ -27,6 +29,20 @@ abstract class BaseView
     }
 
     abstract protected function render();
+
+    protected function showApplicationTitle()
+    {
+        $blue = $this->getBlueColor();
+        $reset = $this->getResetColor();
+        $appName = Constantes::APP_NAME;
+        $appVersion = Constantes::APP_VERSION;
+        $author = Constantes::APP_AUTHOR;
+        Screen::showAppUpperLine();
+        //echo "║{$blue}{$appName}. Versión: {$appVersion}. - Programada por: {$author}{$reset}║\n";
+        $appTitle = "{$blue}{$appName}. Versión: {$appVersion}. - Programado por: {$author}{$reset}";
+        Screen::showLeftRightDoubleBorders($appTitle, Screen::plainLength($appTitle) - 11);
+        Screen::showAppMiddleLine();
+    }
 
     protected function getTitle(): string
     {
@@ -61,6 +77,7 @@ abstract class BaseView
     protected function showTitle(): void
     {
         $title = $this->getTitle();
+        $titleLength = Screen::plainLength($title);
 
         if (empty($title)) {
             $title = Constantes::APP_NAME;
@@ -68,7 +85,8 @@ abstract class BaseView
 
         $blue = $this->getBlueColor();
         $reset = $this->getResetColor();
-        echo "{$blue}{$title}{$reset}\n";
+        //echo "{$blue}{$title}{$reset}\n";
+        Screen::showLeftRightDoubleBorders("{$blue}{$title}{$reset}", $titleLength);
     }
 
     protected function showError($message): void

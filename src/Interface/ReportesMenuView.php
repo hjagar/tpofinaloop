@@ -15,7 +15,7 @@ class ReportesMenuView extends MenuView
     public function __construct()
     {
         parent::__construct(
-            'Sistema de Monitoreo de Temperatura - Reportes',
+            Constantes::REPORTES_LABEL,
             [
                 '1' => [
                     'Label' => Constantes::LIST_LABEL,

@@ -20,8 +20,8 @@ class ListarView extends ListView
                 new Column('Sensor', 'idtemperaturasensor'),
                 new Column('Temperatura Superior', 'tasuperior', align: Align::RIGHT),
                 new Column('Temperatura Inferior', 'tainferior', align: Align::RIGHT),
-                new Column('Fecha y Hora de Inicio', 'tafechainicio'),
-                new Column('Fecha y Hora de Fin', 'tafechafin'),
+                new Column('Fecha Hora Inicio', 'tafechainicio', format: fn($date) => $this->dateFormat($date)),
+                new Column('Fecha Hora Fin', 'tafechafin', format: fn($date) => $this->dateFormat($date)),
             ]
         );
     }

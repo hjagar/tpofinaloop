@@ -5,50 +5,50 @@ namespace App\Control;
 use App\Control\Request;
 use App\Modelo\TemperaturaSensorHeladera;
 
-class SensorHeladeraControl
+class SensorHeladeraControl extends Control
 {
-    public function index(): array | string | null
+    public function index(): object | null
     {
         $returnValue = null;
 
         try {
-            $returnValue = TemperaturaSensorHeladera::all();
+            $returnValue = $this->ok(TemperaturaSensorHeladera::all());
         } catch (\Exception $e) {
-            $returnValue = $e->getMessage();
+            $returnValue = $this->fail($e->getMessage());
         }
 
         return $returnValue;
     }
 
-    public function show($id): object | string | null
+    public function show($id): object | null
     {
         $returnValue = null;
 
         try {
-            $returnValue = TemperaturaSensorHeladera::find($id);
+            $returnValue = $this->ok(TemperaturaSensorHeladera::find($id));
         } catch (\Exception $e) {
-            $returnValue = $e->getMessage();
+            $returnValue = $this->fail($e->getMessage());
         }
 
         return $returnValue;
     }
 
-    public function create(Request $data): object | string | null
+    public function create(Request $data): object | null
     {
         $returnValue = null;
 
         try {
             $temperaturaSensorHeladera = new TemperaturaSensorHeladera();
             $temperaturaSensorHeladera->fill($data->getFields());
-            $returnValue = $temperaturaSensorHeladera->save();
+            $returnValue = $this->ok($temperaturaSensorHeladera->save());
         } catch (\Exception $e) {
-            $returnValue = $e->getMessage();
+            $returnValue = $this->fail($e->getMessage());
         }
 
         return $returnValue;
     }
 
-    public function update($id, Request $data): object | string | null
+    public function update($id, Request $data): object | null
     {
         $returnValue = null;
 
@@ -57,16 +57,16 @@ class SensorHeladeraControl
 
             if ($temperaturaSensorHeladera) {
                 $temperaturaSensorHeladera->fill($data->getFields());
-                $returnValue = $temperaturaSensorHeladera->save();
+                $returnValue = $this->ok($temperaturaSensorHeladera->save());
             }
         } catch (\Exception $e) {
-            $returnValue = $e->getMessage();
+            $returnValue = $this->fail($e->getMessage());
         }
 
         return $returnValue;
     }
 
-    public function delete($id): bool | string
+    public function delete($id): object | null
     {
         $returnValue = false;
 
@@ -74,10 +74,10 @@ class SensorHeladeraControl
             $temperaturaSensorHeladera = TemperaturaSensorHeladera::find($id);
 
             if ($temperaturaSensorHeladera) {
-                $returnValue = $temperaturaSensorHeladera->delete();
+                $returnValue = $this->ok($temperaturaSensorHeladera->delete());
             }
         } catch (\Exception $e) {
-            $returnValue = $e->getMessage();
+            $returnValue = $this->fail($e->getMessage());
         }
         
         return $returnValue;
