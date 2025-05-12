@@ -27,6 +27,7 @@ abstract class MenuView extends BaseView
             $this->showMenu();
             $len = Screen::plainLength(Constantes::SELECT_OPTION);
             $option = readline(Screen::showBottomLine(Constantes::SELECT_OPTION, $len, true));
+            Screen::redrawRightLine();
             $option = strtoupper(trim($option));
 
             if (array_key_exists($option, $this->getMenu())) {

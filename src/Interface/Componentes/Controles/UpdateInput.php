@@ -18,8 +18,11 @@ class UpdateInput extends Input
     public function show(): bool
     {
         $returnValue = false;
-        $label = $this->makeReadlinePrompt(" (actual: {$this->getOldValue()})");
-        $value = readline("{$label} ");
+        $labelEnd = " (actual: {$this->getOldValue()})";
+        $labelEndLength = Screen::plainLength($labelEnd) + 1;
+        $label = $this->makeReadlinePrompt($labelEnd);
+        $value = readline(Screen::showBottomLine("{$label} ", $labelEndLength + $this->getLabelLength(), true));
+        Screen::redrawRightLine();
 
         if (!$this->isCancelInput($value)) {
             if (empty($value)) {

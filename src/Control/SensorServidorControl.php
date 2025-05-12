@@ -5,50 +5,50 @@ namespace App\Control;
 use App\Control\Request;
 use App\Modelo\TemperaturaSensorServidor;
 
-class SensorServidorControl
+class SensorServidorControl extends Control
 {
-    public function index(): array | string | null
+    public function index(): object | null
     {
         $returnValue = null;
 
         try {
-            $returnValue = TemperaturaSensorServidor::all();
+            $returnValue = $this->ok(TemperaturaSensorServidor::all());
         } catch (\Exception $e) {
-            $returnValue = $e->getMessage();
+            $returnValue = $this->fail($e->getMessage());
         }
 
         return $returnValue;
     }
 
-    public function show($id): object | string | null
+    public function show($id): object | null
     {
         $returnValue = null;
 
         try {
-            $returnValue = TemperaturaSensorServidor::find($id);
+            $returnValue = $this->ok(TemperaturaSensorServidor::find($id));
         } catch (\Exception $e) {
-            $returnValue = $e->getMessage();
+            $returnValue = $this->fail($e->getMessage());
         }
 
         return $returnValue;
     }
 
-    public function create(Request $data): object | string | null
+    public function create(Request $data): object | null
     {
         $returnValue = null;
 
         try {
             $temperaturaSensorServidor = new TemperaturaSensorServidor();
             $temperaturaSensorServidor->fill($data->getFields());
-            $returnValue = $temperaturaSensorServidor->save();
+            $returnValue = $this->ok($temperaturaSensorServidor->save());
         } catch (\Exception $e) {
-            $returnValue = $e->getMessage();
+            $returnValue = $this->fail($e->getMessage());
         }
 
         return $returnValue;
     }
 
-    public function update($id, Request $data): object | string | null
+    public function update($id, Request $data): object | null
     {
         $returnValue = null;
 
@@ -57,16 +57,16 @@ class SensorServidorControl
 
             if ($temperaturaSensorServidor) {
                 $temperaturaSensorServidor->fill($data->getFields());
-                $returnValue = $temperaturaSensorServidor->save();
+                $returnValue = $this->ok($temperaturaSensorServidor->save());
             }
         } catch (\Exception $e) {
-            $returnValue = $e->getMessage();
+            $returnValue = $this->fail($e->getMessage());
         }
 
         return $returnValue;
     }
 
-    public function delete($id): bool | string
+    public function delete($id): object | null
     {
         $returnValue = false;
         
@@ -74,10 +74,10 @@ class SensorServidorControl
             $temperaturaSensorServidor = TemperaturaSensorServidor::find($id);
 
             if ($temperaturaSensorServidor) {
-                $returnValue = $temperaturaSensorServidor->delete();
+                $returnValue = $this->ok($temperaturaSensorServidor->delete());
             }
         } catch (\Exception $e) {
-            $returnValue = $e->getMessage();
+            $returnValue = $this->fail($e->getMessage());
         }
 
         return $returnValue;

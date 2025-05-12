@@ -4,6 +4,8 @@ namespace App\Interface\Componentes\Controles;
 
 class Screen 
 {
+    private const WIDTH = 100;
+
     public static function clearScreen(): void
     {
         echo "\033[2J\033[H";
@@ -20,7 +22,7 @@ class Screen
 
     public static function getHorizontalDoubleLine()
     {
-        return str_repeat("═", 85);
+        return str_repeat("═", self::WIDTH);
     }
 
     public static function showAppUpperLine()
@@ -40,9 +42,9 @@ class Screen
         $padText = "";
 
         if ($pad !== 0) {
-            $padText = str_repeat(" ", 85 - $pad);
+            $padText = str_repeat(" ", self::WIDTH - $pad);
         }
-        //$text = str_pad($text, 85 + $extrPad);
+
         echo "║{$text}{$padText}║\n";
     }
 
@@ -50,9 +52,9 @@ class Screen
         $padText = "";
 
         if ($pad !== 0) {
-            $padText = str_repeat(" ", 85 - $pad);
+            $padText = str_repeat(" ", self::WIDTH - $pad);
         }
-        //$text = str_pad($text, 85 + $extrPad);
+
         echo "║{$text}{$padText}║\n";
         $hline = self::getHorizontalDoubleLine();
         echo "╚{$hline}╝";
@@ -62,5 +64,15 @@ class Screen
             Cursor::first();
             Cursor::right($pad + 1);
         }
+    }
+
+    public static function redrawRightLine()
+    {
+        Cursor::up();
+        Cursor::first();
+        Cursor::right(self::WIDTH + 1);
+        echo "║";
+        Cursor::down();
+        Cursor::first();
     }
 }

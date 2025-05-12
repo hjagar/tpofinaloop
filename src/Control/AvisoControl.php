@@ -5,44 +5,44 @@ namespace App\Control;
 use App\Control\Request;
 use App\Modelo\TemperaturaAviso;
 
-class AvisoControl
+class AvisoControl extends Control
 {
-    public function index(): array | string | null
+    public function index(): object | null
     {
         $returnValue = null;
 
         try {
-            $returnValue = TemperaturaAviso::all();
+            $returnValue = $this->ok(TemperaturaAviso::all());
         } catch (\Exception $e) {
-            $returnValue = $e->getMessage();
+            $returnValue = $this->fail($e->getMessage());
         }
 
         return $returnValue;
     }
 
-    public function show($id): object | string | null
+    public function show($id): object | null
     {
         $returnValue = null;
 
         try {
-            $returnValue = TemperaturaAviso::find($id);
+            $returnValue = $this->ok(TemperaturaAviso::find($id));
         } catch (\Exception $e) {
-            $returnValue = $e->getMessage();
+            $returnValue = $this->fail($e->getMessage());
         }
 
         return $returnValue;
     }
 
-    public function create(Request $data): object | string | null
+    public function create(Request $data): object | null
     {
         $returnValue = null;
 
         try {
             $temperaturaAviso = new TemperaturaAviso();
             $temperaturaAviso->fill($data->getFields());
-            $returnValue = $temperaturaAviso->save();
+            $returnValue = $this->ok($temperaturaAviso->save());
         } catch (\Exception $e) {
-            $returnValue = $e->getMessage();
+            $returnValue = $this->fail($e->getMessage());
         }
 
         return $returnValue;
@@ -57,16 +57,16 @@ class AvisoControl
 
             if ($temperaturaAviso) {
                 $temperaturaAviso->fill($data->getFields());
-                $returnValue = $temperaturaAviso->save();
+                $returnValue = $this->ok($temperaturaAviso->save());
             }
         } catch (\Exception $e) {
-            $returnValue = $e->getMessage();
+            $returnValue = $this->fail($e->getMessage());
         }
 
         return $returnValue;
     }
 
-    public function delete($id): bool | string
+    public function delete($id): object | null
     {
         $returnValue = null;
 
@@ -74,10 +74,10 @@ class AvisoControl
             $temperaturaAviso = TemperaturaAviso::find($id);
 
             if ($temperaturaAviso) {
-                $returnValue = $temperaturaAviso->delete();
+                $returnValue = $this->ok($temperaturaAviso->delete());
             }
         } catch (\Exception $e) {
-            $returnValue = $e->getMessage();
+            $returnValue = $this->fail($e->getMessage());
         }
 
         return $returnValue;

@@ -30,61 +30,6 @@ abstract class BaseView
 
     abstract protected function render();
 
-    // protected function clearScreen(): void
-    // {
-    //     echo "\033[2J\033[H";
-
-    //     if (strncasecmp(PHP_OS, 'WIN', 3) === 0) {
-    //         system('cls');
-    //     }
-    // }
-
-    // protected function getHorizontalDoubleLine()
-    // {
-    //     return str_repeat("═", 85);
-    // }
-
-    // protected function showAppUpperLine()
-    // {
-    //     $hLine = $this->getHorizontalDoubleLine();
-    //     echo "╔{$hLine}╗\n";
-    // }
-
-    // protected function showAppMiddleLine()
-    // {
-    //     $hLine = $this->getHorizontalDoubleLine();
-    //     echo "╠{$hLine}╣\n";
-    // }
-
-    // protected function showLeftRightDoubleBorders($text, $pad = 0)
-    // {
-    //     $padText = "";
-
-    //     if ($pad !== 0) {
-    //         $padText = str_repeat(" ", 85 - $pad);
-    //     }
-    //     //$text = str_pad($text, 85 + $extrPad);
-    //     echo "║{$text}{$padText}║\n";
-    // }
-
-    // protected function showBottomLine($text, $pad = 0, $prompt = false) {
-    //     $padText = "";
-
-    //     if ($pad !== 0) {
-    //         $padText = str_repeat(" ", 85 - $pad);
-    //     }
-    //     //$text = str_pad($text, 85 + $extrPad);
-    //     echo "║{$text}{$padText}║\n";
-    //     $hline = $this->getHorizontalDoubleLine();
-    //     echo "╚{$hline}╝";
-
-    //     if ($prompt){
-    //         Cursor::up();
-    //         Cursor::first();
-    //         Cursor::right($pad + 1);
-    //     }
-    // }
-
     protected function showApplicationTitle()
     {
         $blue = $this->getBlueColor();
@@ -94,7 +39,8 @@ abstract class BaseView
         $author = Constantes::APP_AUTHOR;
         Screen::showAppUpperLine();
         //echo "║{$blue}{$appName}. Versión: {$appVersion}. - Programada por: {$author}{$reset}║\n";
-        Screen::showLeftRightDoubleBorders("{$blue}{$appName}. Versión: {$appVersion}. - Programado por: {$author}{$reset}");
+        $appTitle = "{$blue}{$appName}. Versión: {$appVersion}. - Programado por: {$author}{$reset}";
+        Screen::showLeftRightDoubleBorders($appTitle, Screen::plainLength($appTitle) - 11);
         Screen::showAppMiddleLine();
     }
 
@@ -126,11 +72,6 @@ abstract class BaseView
     protected function getErrorColor()
     {
         return $this->appColors['error'];
-    }
-
-    protected function textPad($text)
-    {
-        return str_pad($text, 85);
     }
 
     protected function showTitle(): void

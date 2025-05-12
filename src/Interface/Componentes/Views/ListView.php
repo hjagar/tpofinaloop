@@ -2,6 +2,7 @@
 
 namespace App\Interface\Componentes\Views;
 
+use App\Interface\Componentes\Controles\Screen;
 use App\Interface\Componentes\Views\ActionView;
 use App\Interface\Componentes\Enums\Align;
 use App\Interface\Componentes\Enums\Separator;
@@ -51,7 +52,7 @@ abstract class ListView extends ActionView
             $width = $column->getWidth();
 
             if ($width === 0) {
-                $width = strlen($label);
+                $width = Screen::plainLength($label);
                 $column->setWidth($width);
             }
         }
@@ -66,10 +67,12 @@ abstract class ListView extends ActionView
         $headers = $this->getColumnHeaders();
 
         if (!empty($headers)) {
-            $columnsToShow = implode(Separator::PIPE->value(), $headers);
-            $header = " {$columnsToShow} ";
-            $separator = str_repeat(trim(Separator::DASH->value()), strlen($header));
-            echo "{$header}\n{$separator}\n";
+            $columnsToShow = implode(Separator::VERTICAL_LINE->value(), $headers);
+            $header = "{$columnsToShow}";
+            $headerUnderlines = array_map(fn($header) => str_repeat(Separator::HORIZONTAL_LINE->value(), Screen::plainLength($header)), $headers);
+            $separator = implode(Separator::PLUS->value(), $headerUnderlines);
+            Screen::showLeftRightDoubleBorders($header, Screen::plainLength($header));
+            Screen::showLeftRightDoubleBorders($separator, Screen::plainLength($separator));
         }
     }
 
@@ -83,17 +86,22 @@ abstract class ListView extends ActionView
             $align = $col->getAlign();
             $pad = $align === Align::LEFT ? STR_PAD_RIGHT : STR_PAD_LEFT;
             $value = $row->$field;
+            $format = $col->getFormat();
+
+            if ($format !== null && $value !== null) {
+                $value = $format($value);
+            }
 
             return str_pad($value ?? '', $width, Separator::SPACE->value(), $pad);
         }, $columns);
 
-        return implode(Separator::PIPE->value(), $rowValues);
+        return implode(Separator::VERTICAL_LINE->value(), $rowValues);
     }
 
     private function showDataRow($row): void
     {
         $rowToShow = $this->flatRow($row);
-        echo " {$rowToShow}\n";
+        Screen::showLeftRightDoubleBorders($rowToShow, Screen::plainLength($rowToShow));
     }
 
     protected function showData(array | bool $data): void
@@ -106,8 +114,12 @@ abstract class ListView extends ActionView
                     $this->showDataRow($row);
                 }
             } else {
-                $this->showMessage(Constantes::NO_DATA);
+                //$this->showMessage(Constantes::NO_DATA);
+                $noDataMessage = Constantes::NO_DATA;
+                Screen::showLeftRightDoubleBorders($noDataMessage, Screen::plainLength($noDataMessage));
             }
+            $backMessage = "Presione Enter para volver";
+            readline(Screen::showBottomLine($backMessage, Screen::plainLength($backMessage), true));
         }
     }
 
@@ -124,10 +136,15 @@ abstract class ListView extends ActionView
 
         return $returnValue;
     }
+    
+    protected function dateFormat($date)
+    {
+        return date_format(date_create($date), 'd/m/Y H:i');
+    }
 
     protected function render()
     {
-        $this->clearScreen();
+        Screen::clearScreen();
         $this->showApplicationTitle();
         $data = $this->getData();
         $this->showTitle();

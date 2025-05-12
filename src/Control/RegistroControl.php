@@ -5,50 +5,50 @@ namespace App\Control;
 use App\Control\Request;
 use App\Modelo\TemperaturaRegistro;
 
-class RegistroControl
+class RegistroControl extends Control
 {
-    public function index(): array | string | null
+    public function index(): object | null
     {
         $returnValue = null;
 
         try {
-            $returnValue = TemperaturaRegistro::all();
+            $returnValue = $this->ok(TemperaturaRegistro::all());
         } catch (\Exception $e) {
-            $returnValue = $e->getMessage();
+            $returnValue = $this->fail($e->getMessage());
         }
 
         return $returnValue;
     }
 
-    public function show($id): object | string | null
+    public function show($id): object | null
     {
         $returnValue = null;
 
         try {
-            $returnValue = TemperaturaRegistro::find($id);
+            $returnValue = $this->ok(TemperaturaRegistro::find($id));
         } catch (\Exception $e) {
-            $returnValue = $e->getMessage();
+            $returnValue = $this->fail($e->getMessage());
         }
 
         return $returnValue;
     }
 
-    public function create(Request $data): object | string | null
+    public function create(Request $data): object | null
     {
         $returnValue = null;
 
         try {
             $temperaturaRegistro = new TemperaturaRegistro();
             $temperaturaRegistro->fill($data->getFields());
-            $returnValue = $temperaturaRegistro->save();
+            $returnValue = $this->ok($temperaturaRegistro->save());
         } catch (\Exception $e) {
-            $returnValue = $e->getMessage();
+            $returnValue = $this->fail($e->getMessage());
         }
 
         return $returnValue;
     }
 
-    public function update($id, Request $data): object | string | null
+    public function update($id, Request $data): object | null
     {
         $returnValue = null;
         try {
@@ -56,16 +56,16 @@ class RegistroControl
 
             if ($temperaturaRegistro) {
                 $temperaturaRegistro->fill($data->getFields());
-                $returnValue = $temperaturaRegistro->save();
+                $returnValue = $this->ok($temperaturaRegistro->save());
             }
         } catch (\Exception $e) {
-            $returnValue = $e->getMessage();
+            $returnValue = $this->fail($e->getMessage());
         }
 
         return $returnValue;
     }
 
-    public function delete($id): bool | string
+    public function delete($id): object | null
     {
         $returnValue = null;
 
@@ -73,10 +73,10 @@ class RegistroControl
             $temperaturaRegistro = TemperaturaRegistro::find($id);
 
             if ($temperaturaRegistro) {
-                $returnValue = $temperaturaRegistro->delete();
+                $returnValue = $this->ok($temperaturaRegistro->delete());
             }
         } catch (\Exception $e) {
-            $returnValue = $e->getMessage();
+            $returnValue = $this->fail($e->getMessage());
         }
 
         return $returnValue;

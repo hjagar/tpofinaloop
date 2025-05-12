@@ -12,11 +12,12 @@ class ListarView extends ListView
         parent::__construct(
             'Avisos',	
             AvisoControl::class,
+            'Aviso',	
             [
                 new Column('Id Aviso', 'idtemperaturaaviso'),
                 new Column('Nombre Completo', 'tanombre'),
                 new Column('Correo Electrónico', 'taemail'),
-                new Column('Activo Desde', 'taactivo')
+                new Column('Fecha Activo Desde', 'taactivo', format: fn($value) => $this->dateFormat($value)),
             ]
         );
     }

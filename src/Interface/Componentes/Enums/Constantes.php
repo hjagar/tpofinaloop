@@ -47,19 +47,19 @@ class Constantes
     const UNDERLINE_RESET = "\e[24m";
 
     // Constantes de operaciones
-    const NO_DATA = "No hay datos para mostrar.\n";
+    const NO_DATA = "No hay datos para mostrar.";
     const SAVE = "Guardar";
     const CANCEL = "Cancelar";
     const CANCEL_MESSAGE = "Operación cancelada.\n";
     const DELETE_MESSAGE = "Registro de %s eliminado con éxito.\n";
     const DELETE_ERROR_MESSAGE = "Error al eliminar: %s.\n";
-    const DELETE_CONFIRMATION_MESSAGE = "¿Está seguro de que desea eliminar la %s con los siguientes datos (%s)?\n";
+    const DELETE_CONFIRMATION_MESSAGE = "¿Está seguro de eliminar %s (%s)?";
     const SAVE_MESSAGE = "Registro de %s guardado con éxito.\n";
     const SAVE_ERROR_MESSAGE = "Error al guardar: %s.\n";
     const GENERIC_ERROR_MESSAGE = "Error: %s.\n";
     const LIST_ERROR = "Error al recuperar lista de %s.\n";
     const NOT_FOUND_ERROR_MESSAGE = "No se encontró el registro de %s.\n";
-    const UPDATE_SUBTITLE =  " Presione 'Enter' para mantener valor. Presione '-' para blanquear valor.";
+    const UPDATE_SUBTITLE =  " 'Enter' mantener valor. '-' blanquear valor.";
     const UPDATE_MESSAGE = "Registro de %s actualizado con éxito.\n";
     const UPDATE_ERROR_MESSAGE = "Error al actualizar: %s.\n";
     const CHOICE_MESSAGE = "Seleccione una opción:";

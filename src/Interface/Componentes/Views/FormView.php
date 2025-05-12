@@ -103,9 +103,9 @@ abstract class FormView extends ActionView
         $subtitle = $this->getSubtitle();
         $green = $this->getGreenColor();
         $reset = $this->getResetColor();
-        $subtitlePlain = "(*) Campo requerido.{$subtitle} Presione '/' para cancelar.";
+        $subtitlePlain = "(*) requerido.{$subtitle} '/' cancelar.";
         $subtitleLength = Screen::plainLength($subtitlePlain);
-        Screen::showLeftRightDoubleBorders("{$green}(*) Campo requerido.{$subtitle} Presione '/' para cancelar.{$reset}", $subtitleLength);
+        Screen::showLeftRightDoubleBorders("{$green}(*) requerido.{$subtitle} '/' cancelar.{$reset}", $subtitleLength);
     }
 
     private function getInputsIndex(): array

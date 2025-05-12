@@ -27,12 +27,16 @@ class Choice extends Input
     public function show(): bool
     {
         $returnValue = false;
-        $label = $this->makeReadlinePrompt(color: Constantes::BLUE_COLOR, showRequired: $this->getShowRequired());
+        $label = trim($this->makeReadlinePrompt(color: $this->getColor(), showRequired: $this->getShowRequired()));
         $options = $this->makeOptionsString();
         $choicePrompt = $this->makeChoicePrompt();
         $prompt = $this->createReadlinePrompt($label, $options, $choicePrompt);
-        $value = readline("{$prompt}");
-
+        $len = Screen::plainLength($prompt); 
+        $correction = $this->getCorrection();//echo $len;exit;
+        //$value = readline("{$prompt}");
+        $value = readline(Screen::showBottomLine($prompt, $len - $correction, true));
+        Screen::redrawRightLine();
+        
         if (!$this->isCancelInput($value)) {
             if ($this->isRequired() && !array_key_exists($value, $this->options)) {
                 $this->showError(Constantes::formatMessage(Constantes::REQUIRED, $this->getLabel()));
@@ -45,6 +49,15 @@ class Choice extends Input
         }
 
         return $returnValue;
+    }
+
+    private function getCorrection(): int
+    {
+        $colorLength = $this->getColor() ? Screen::plainLength($this->getColor()) : 0;
+        $resetColorLength = $this->getColor()? Screen::plainLength(Constantes::RESET_COLOR) : 0;
+        $optionsCount = count($this->getOptions());
+
+        return ($colorLength + $resetColorLength) * ($optionsCount + 2);
     }
     
     private function createReadlinePrompt($label, $options, $choice){
@@ -61,8 +74,8 @@ class Choice extends Input
     {
         $options = $this->getOptions();
         $optionsToShowArray = [];
-        $color = $this->getColor() ?? Constantes::GREY_COLOR;
-        $resetColor = Constantes::RESET_COLOR;
+        $color = $this->getColor() ?? '';
+        $resetColor = $this->getColor() ? Constantes::RESET_COLOR : '';
 
         foreach ($options as $key => $option) {
             $optionsToShowArray[] = "{$color}{$key}. {$option}{$resetColor}";
