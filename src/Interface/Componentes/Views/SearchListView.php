@@ -2,6 +2,7 @@
 
 namespace App\Interface\Componentes\Views;
 
+use App\Interface\Componentes\Controles\Screen;
 use App\Interface\Componentes\Views\ListView;
 
 abstract class SearchListView extends ListView
@@ -58,7 +59,7 @@ abstract class SearchListView extends ListView
 
     protected function render()
     {
-        $this->clearScreen();
+       Screen::clearScreen();
         $this->showApplicationTitle();
         $this->showTitle();
         $this->showFilters();

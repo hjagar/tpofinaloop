@@ -114,10 +114,10 @@ abstract class ListView extends ActionView
                     $this->showDataRow($row);
                 }
             } else {
-                //$this->showMessage(Constantes::NO_DATA);
                 $noDataMessage = Constantes::NO_DATA;
                 Screen::showLeftRightDoubleBorders($noDataMessage, Screen::plainLength($noDataMessage));
             }
+            
             $backMessage = "Presione Enter para volver";
             readline(Screen::showBottomLine($backMessage, Screen::plainLength($backMessage), true));
         }
