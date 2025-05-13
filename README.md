@@ -32,5 +32,18 @@ Existiendo 5 tipos de vistas:
     - Una vista para renderizar los formularios de edicion
     - Una vista para renderizar los formularios de eliminacion
 
+## Pantallas
+Menú principal:
+![Menu principal](images/MainMenu.png)
+
+Menú de Administración:
+![Menú de Administración](images/AdminMenu.png)
+
+Menú de Reportes:
+![Menú de Reportes](images/ReportMenu.png)
+
+Listado de Sensores:
+![Listado de Sensores](images/SensorList.jpg)
+
 ## Autor
 Gonzalo Molina
