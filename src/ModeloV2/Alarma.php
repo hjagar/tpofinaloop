@@ -4,6 +4,8 @@ namespace App\Modelo;
 
 use App\Modelo\Modelo;
 use App\Modelo\Sensor;
+use App\Modelo\Aviso;
+use App\Modelo\Relationship;
 
 class Alarma extends Modelo
 {
@@ -13,7 +15,8 @@ class Alarma extends Modelo
     private $tainferior;
     private $tafechainicio;
     private $tafechafin;
-    private $sensor;
+    private $sensor; //TODO: ver muchos a uno
+    private $avisos; //TODO: ver muchos a muchos
 
     public function __construct()
     {
@@ -21,7 +24,15 @@ class Alarma extends Modelo
             Alarma::class,
             'w_temperaturaalarmas',
             ['idtemperaturaalarma', 'idtemperaturasensor', 'tasuperior', 'tainferior', 'tafechainicio', 'tafechafin'],
-            'idtemperaturaalarma'
+            'idtemperaturaalarma',
+            [
+                Relationship::HasOne => [                 
+                    'sensor' => Sensor::class                   
+                ], 
+                Relationship::HasMany => [
+                    'avisos' => Aviso::class
+                ]
+            ]
         );
         $this->idtemperaturaalarma = null;
         $this->idtemperaturasensor = null;
@@ -88,20 +99,30 @@ class Alarma extends Modelo
 
     public function getSensor()
     {
-        $sensor = null;
-        $idtemperaturasensor = $this->getIdtemperaturasensor();
+        // $sensor = null;
+        // $idtemperaturasensor = $this->getIdtemperaturasensor();
 
-        if ($idtemperaturasensor) {
-            $sensor = new Sensor();
-            $sensor = $sensor->find($idtemperaturasensor);
-            $this->setSensor($sensor);
-        }
+        // if ($idtemperaturasensor) {
+        //     $sensor = new Sensor();
+        //     $sensor = $sensor->find($idtemperaturasensor);
+        //     $this->setSensor($sensor);
+        // }
 
         return $this->sensor;
     }
-    
+
     public function setSensor($v)
     {
         $this->sensor = $v;
+    }
+
+    public function getAvisos()
+    {
+        return $this->avisos;
+    }
+
+    public function setAvisos($v)
+    {
+        $this->avisos = $v;
     }
 }

@@ -2,6 +2,8 @@
 namespace App\Modelo;
 
 use App\Modelo\Modelo;
+use App\Modelo\Registro;
+use App\Modelo\Alarma;
 
 class Sensor extends Modelo
 {
@@ -10,6 +12,8 @@ class Sensor extends Modelo
     private $tsubicacion;
     private $tselementosresguardan;
     private $tsmontoresguardado;
+    private $registros; //TODO: ver uno a muchos
+    private $alertas; //TODO: ver uno a muchos
 
     public function __construct($className = null, $tableName = null, $columnNames = null, $autoIncrement = true, $isa = null)
     {  
@@ -38,7 +42,8 @@ class Sensor extends Modelo
             $columnNames,
             'idtemperaturasensor',
             $autoIncrement,
-            $isa
+            $isa,
+            [Relationship::HasMany => ['registros' => Registro::class, 'alarmas' => Alarma::class]]
         );
 
         $this->idtemperaturasensor = null;
@@ -96,5 +101,25 @@ class Sensor extends Modelo
     public function setTsmontoresguardado($tsmontoresguardado)
     {
         $this->tsmontoresguardado = $tsmontoresguardado;
+    }
+
+    public function getRegistros()
+    {
+        return $this->registros;
+    }
+
+    public function setRegistros($registros)
+    {
+        $this->registros = $registros;
+    }
+
+    public function getAlertas()
+    {
+        return $this->alertas;
+    }
+
+    public function setAlertas($alertas)
+    {
+        $this->alertas = $alertas;
     }
 }

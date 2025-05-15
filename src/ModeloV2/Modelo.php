@@ -10,8 +10,9 @@ abstract class Modelo
     private $primaryKey;
     private $autoIncrement;
     private $isa;
+    private $relations;
 
-    public function __construct($className, $table, $fields, $primaryKey, $autoIncrement = true, $isa = null)
+    public function __construct($className, $table, $fields, $primaryKey, $autoIncrement = true, $isa = null, $relations = null)
     {
         $this->className = $className;
         $this->table = $table;
@@ -19,6 +20,7 @@ abstract class Modelo
         $this->primaryKey = $primaryKey;
         $this->autoIncrement = $autoIncrement;
         $this->isa = $isa;
+        $this->relations = $relations;
     }
 
     public function getClassName()
@@ -51,6 +53,19 @@ abstract class Modelo
         return $this->isa;
     }
 
+    public function getRelations()
+    {
+        return $this->relations;
+    }
+
+    public function getPrimaryKeyValue()
+    {
+        $primaryKey = $this->getPrimaryKey();
+        $method = "get" . ucfirst($primaryKey);
+
+        return $this->$method();
+    }
+
     public function setPrimaryKeyValue($value)
     {
         $primaryKey = $this->getPrimaryKey();
@@ -74,7 +89,7 @@ abstract class Modelo
     {
         $returnValue = null;
         $db = new BaseDatos();
-        $sql = $this->makeSelectStatement(); //"SELECT * FROM {$this->getTable()}";
+        $sql = $this->makeSelectStatement();
 
         if ($condition !== "") {
             $sql .= " WHERE {$condition}";
@@ -86,6 +101,7 @@ abstract class Modelo
                 $returnValue = array_map(function ($record) {
                     return $this->mapToObject($record);
                 }, $data);
+                $returnValue = $this->processRelations($returnValue);
             } else {
                 $returnValue = $db->getError();
             }
@@ -106,6 +122,7 @@ abstract class Modelo
             if ($db->execute($sql, [":id" => $id])) {
                 $record = $db->getSingleRecord();
                 $returnValue = $this->mapToObject($record);
+                $returnValue = $this->processRelation($returnValue);
             } else {
                 $returnValue = $db->getError();
             }
@@ -167,7 +184,7 @@ abstract class Modelo
             $isaReturnValue = $isaClass->update();
         }
 
-        if ($isa === null || $isaReturnValue!== null) {
+        if ($isa === null || $isaReturnValue !== null) {
             $sqlFields = $this->getFieldsForUpdate();
             $sql = "UPDATE {$this->getTable()} SET {$sqlFields} WHERE {$this->getPrimaryKey()} = :{$this->getPrimaryKey()}";
             $currentFieldValues = $this->getCurrentFieldValues();
@@ -180,7 +197,7 @@ abstract class Modelo
                 }
             } else {
                 $returnValue = $db->getError();
-            }            
+            }
         }
 
         return $returnValue;
@@ -192,7 +209,7 @@ abstract class Modelo
         $isaReturnValue = null;
         $db = new BaseDatos();
         $sql = "DELETE FROM {$this->getTable()} WHERE {$this->getPrimaryKey()} = :{$this->getPrimaryKey()}";
-        $primaryKeyValue  = $this->getPrimaryKeyValue();
+        $primaryKeyValue  = $this->getPrimaryKeyValueForDelete();
 
         if ($db->init()) {
             if ($db->execute($sql, $primaryKeyValue)) {
@@ -210,6 +227,98 @@ abstract class Modelo
             }
         } else {
             $returnValue = $db->getError();
+        }
+
+        return $returnValue;
+    }
+
+    private function processRelation($record) 
+    {
+        $returnValue = $this->processRelations([$record]);
+
+        return $returnValue[0];
+    }
+
+    // [Relationship::HasOne => [sensor' => Sensor::class]]
+    // [Relationship::HasMany => ['registros' => Registro::class, 'alarmas' => Alarma::class]]
+    // [Relationship::HasOne => ['sensor' => Sensor::class], Relationship::HasMany => ['avisos' => Aviso::class]]
+    private function processRelations($records)
+    {
+        $returnValue = $records;
+        $relations = $this->getRelations();
+
+        if ($relations !== null) {
+            foreach ($relations as $key => $relationType) {
+                switch ($key) {
+                    case Relationship::HasOne:
+                        $returnValue = $this->processHasOneRelation($returnValue, $relationType);
+                        break;
+                    case Relationship::HasMany:
+                        $returnValue = $this->processHasManyRelation($returnValue, $relationType);
+                        break;
+                }
+            }
+        }
+
+        return $returnValue;
+    }
+    // ['sensor' => Sensor::class]
+    private function processHasOneRelation($records, $relationType)
+    {
+        $returnValue = $records;
+
+        foreach ($relationType as $relationName => $relationClass) {
+            $relationObject = new $relationClass();
+            $foreignPrimaryKey = $relationObject->getPrimaryKey();
+            $foreignKeyValues = array_map(function ($record) use ($foreignPrimaryKey) {
+                $method = "get" . ucfirst($foreignPrimaryKey);
+                return $record->$method();
+            }, $records);
+
+            $relationRecords = $relationObject->list("{$foreignPrimaryKey} IN (" . implode(",", $foreignKeyValues) . ")");
+            $relationRecordsByPrimaryKey = array_combine($foreignKeyValues, $relationRecords);
+            $returnValue = array_map(function ($record) use ($foreignPrimaryKey, $relationName, $relationRecordsByPrimaryKey) {
+                $getter = "get" . ucfirst($foreignPrimaryKey);
+                $setter = "set" . ucfirst($relationName);
+                $foreignKeyValue = $record->$getter();
+
+                if (isset($relationRecordsByPrimaryKey[$foreignKeyValue])) {
+                    $record->$setter($relationRecordsByPrimaryKey[$foreignKeyValue]);
+                }
+
+                return $record;
+            }, $records);
+        }
+
+        return $returnValue;
+    }
+
+    // ['registros' => Registro::class, 'alarmas' => Alarma::class]
+    private function processHasManyRelation($records, $relationType)
+    {
+        $returnValue = $records;
+
+        foreach ($relationType as $relationName => $relationClass) {
+            $relationObject = new $relationClass();
+            $foreignPrimaryKey = $this->getPrimaryKey();
+            $primaryKeyValues = array_map(function ($record) {
+                return $record->getPrimaryKeyValue();
+            }, $records);
+            $relationRecords = $relationObject->list("{$foreignPrimaryKey} IN (". implode(",", $primaryKeyValues). ")");
+            $returnValue = array_map(function ($record) use ($foreignPrimaryKey, $relationName, $relationRecords) {
+                $setter = "set". ucfirst($relationName);
+                $relationRecordsByForeignKey = array_filter($relationRecords, function ($relationRecord) use ($foreignPrimaryKey, $record) {
+                    $getter = "get". ucfirst($foreignPrimaryKey);
+                    $foreignKeyValue = $record->getPrimaryKeyValue();
+                    $relationForeignKeyValue = $relationRecord->$getter();
+
+                    return $foreignKeyValue === $relationForeignKeyValue;
+                });
+
+                $record->$setter($relationRecordsByForeignKey);
+
+                return $record;
+            }, $records);
         }
 
         return $returnValue;
@@ -308,10 +417,8 @@ abstract class Modelo
         return implode(",", $returnValue);
     }
 
-    private function getPrimaryKeyValue()
+    private function getPrimaryKeyValueForDelete()
     {
-        $primaryKey = $this->getPrimaryKey();
-        $method = "get" . ucfirst($primaryKey);
-        return [":{$this->getPrimaryKey()}" => $this->$method()];
+        return [":{$this->getPrimaryKey()}" => $this->getPrimaryKeyValue()];
     }
 }

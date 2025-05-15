@@ -3,6 +3,7 @@
 namespace App\Modelo;
 
 use App\Modelo\Modelo;
+use App\Modelo\Sensor;
 
 class Registro extends Modelo
 {
@@ -10,7 +11,7 @@ class Registro extends Modelo
     private $idtemperaturasensor;
     private $tltemperatura;
     private $tlfecharegistro;
-    private $sensor;
+    private $sensor; //TODO: ver muchos a uno
 
     public function __construct()
     {
@@ -18,7 +19,8 @@ class Registro extends Modelo
             Registro::class,
             'w_temperaturaregistro',
             ['idtemperaturaregistro', 'idtemperaturasensor', 'tltemperatura', 'tlfecharegistro'],
-            'idtemperaturaregistro'
+            'idtemperaturaregistro',
+            [Relationship::HasOne => ['sensor' => Sensor::class]]
         );
     }
 
@@ -63,14 +65,14 @@ class Registro extends Modelo
 
     public function getSensor()
     {
-        $sensor = null;
-        $idtemperaturasensor = $this->getIdtemperaturasensor();
+        // $sensor = null;
+        // $idtemperaturasensor = $this->getIdtemperaturasensor();
 
-        if ($idtemperaturasensor) {
-            $sensor = new Sensor();
-            $sensor = $sensor->find($idtemperaturasensor);
-            $this->setSensor($sensor);
-        }
+        // if ($idtemperaturasensor) {
+        //     $sensor = new Sensor();
+        //     $sensor = $sensor->find($idtemperaturasensor);
+        //     $this->setSensor($sensor);
+        // }
 
         return $this->sensor;
     }
