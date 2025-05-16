@@ -31,9 +31,11 @@ abstract class SearchListView extends ListView
     {
         $filters = $this->getFilters();
         $returnValue = true;
+        $i = 0;
 
-        for ($i = 0; $i < count($filters) && $returnValue; $i++) {
+        while ($i < count($filters) && $returnValue) {
             $returnValue = $filters[$i]->show();
+            $i++;
         }
 
         return $returnValue;

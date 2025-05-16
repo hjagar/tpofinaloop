@@ -49,14 +49,16 @@ abstract class UpdateFormView extends FormView
         $inputs = $this->getInputs();
         $returnValue = null;
         $found = false;
+        $i = 0;
 
-        for ($i = 0; $i < count($inputs) && !$found; $i++) {
+        while ($i < count($inputs) && !$found) {
             $input = $inputs[$i];
 
             if ($input instanceof $class) {
                 $returnValue = $input;
                 $found = true;
             }
+            $i++;
         }
 
         return $returnValue;

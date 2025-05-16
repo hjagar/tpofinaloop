@@ -52,9 +52,11 @@ abstract class FormView extends ActionView
     {
         $inputs = $this->getInputs();
         $returnValue = true;
+        $i = 0;
 
-        for ($i = 0; $i < count($inputs) && $returnValue; $i++) {
+        while ($i < count($inputs) && $returnValue) {
             $returnValue = $inputs[$i]->show();
+            $i++;
         }
 
         return $returnValue;
