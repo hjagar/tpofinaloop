@@ -11,7 +11,7 @@ class Registro extends Modelo
     private $idtemperaturasensor;
     private $tltemperatura;
     private $tlfecharegistro;
-    private $sensor; //TODO: ver muchos a uno
+    private $sensor;
 
     public function __construct()
     {

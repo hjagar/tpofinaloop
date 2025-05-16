@@ -12,8 +12,8 @@ class Sensor extends Modelo
     private $tsubicacion;
     private $tselementosresguardan;
     private $tsmontoresguardado;
-    private $registros; //TODO: ver uno a muchos
-    private $alertas; //TODO: ver uno a muchos
+    private $registros;
+    private $alertas;
 
     public function __construct($className = null, $tableName = null, $columnNames = null, $autoIncrement = true, $isa = null)
     {  

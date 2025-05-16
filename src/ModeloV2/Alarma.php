@@ -15,8 +15,8 @@ class Alarma extends Modelo
     private $tainferior;
     private $tafechainicio;
     private $tafechafin;
-    private $sensor; //TODO: ver muchos a uno
-    private $avisos; //TODO: ver muchos a muchos
+    private $sensor;
+    private $avisos;
 
     public function __construct()
     {
@@ -25,14 +25,7 @@ class Alarma extends Modelo
             'w_temperaturaalarmas',
             ['idtemperaturaalarma', 'idtemperaturasensor', 'tasuperior', 'tainferior', 'tafechainicio', 'tafechafin'],
             'idtemperaturaalarma',
-            [
-                Relationship::HasOne => [                 
-                    'sensor' => Sensor::class                   
-                ], 
-                Relationship::HasMany => [
-                    'avisos' => Aviso::class
-                ]
-            ]
+            [Relationship::HasOne => ['sensor' => Sensor::class], Relationship::HasMany => ['avisos' => Aviso::class]]
         );
         $this->idtemperaturaalarma = null;
         $this->idtemperaturasensor = null;

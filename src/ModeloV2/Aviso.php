@@ -12,7 +12,7 @@ class Aviso extends Modelo
     private $taactivo;
     private $tanombre;
     private $taemail;
-    private $alarmas; //TODO: ver muchos a muchos
+    private $alarmas;
 
     public function __construct()
     {
