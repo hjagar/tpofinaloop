@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Modelo;
+namespace App\ModeloV2;
 
-use App\Modelo\Modelo;
-use App\Modelo\Sensor;
-use App\Modelo\Aviso;
-use App\Modelo\Relationship;
+use App\ModeloV2\Modelo;
+use App\ModeloV2\Sensor;
+use App\ModeloV2\Aviso;
+use App\ModeloV2\Relationship;
 
 class Alarma extends Modelo
 {
@@ -16,7 +16,6 @@ class Alarma extends Modelo
     private $tafechainicio;
     private $tafechafin;
     private $sensor;
-    private $avisos;
 
     public function __construct()
     {
@@ -25,7 +24,8 @@ class Alarma extends Modelo
             'w_temperaturaalarmas',
             ['idtemperaturaalarma', 'idtemperaturasensor', 'tasuperior', 'tainferior', 'tafechainicio', 'tafechafin'],
             'idtemperaturaalarma',
-            [Relationship::HasOne => ['sensor' => Sensor::class], Relationship::HasMany => ['avisos' => Aviso::class]]
+            relations: [Relationship::HasOne => ['sensor' => Sensor::class], 
+            Relationship::HasManyToMany => ['avisos' => [Aviso::class, 'w_temperaturasensortemperaturaaviso']]]
         );
         $this->idtemperaturaalarma = null;
         $this->idtemperaturasensor = null;
@@ -92,30 +92,11 @@ class Alarma extends Modelo
 
     public function getSensor()
     {
-        // $sensor = null;
-        // $idtemperaturasensor = $this->getIdtemperaturasensor();
-
-        // if ($idtemperaturasensor) {
-        //     $sensor = new Sensor();
-        //     $sensor = $sensor->find($idtemperaturasensor);
-        //     $this->setSensor($sensor);
-        // }
-
-        return $this->sensor;
+       return $this->sensor;
     }
 
     public function setSensor($v)
     {
         $this->sensor = $v;
-    }
-
-    public function getAvisos()
-    {
-        return $this->avisos;
-    }
-
-    public function setAvisos($v)
-    {
-        $this->avisos = $v;
     }
 }

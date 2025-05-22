@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modelo;
+namespace App\ModeloV2;
 
 abstract class Modelo
 {
@@ -85,11 +85,15 @@ abstract class Modelo
         }
     }
 
-    public function list($condition = "")
+    public function list($condition = "", $join = "", $includeRelations = true)
     {
         $returnValue = null;
         $db = new BaseDatos();
         $sql = $this->makeSelectStatement();
+
+        if ($join !== "") {
+            $sql .= " {$join}";
+        }
 
         if ($condition !== "") {
             $sql .= " WHERE {$condition}";
@@ -101,7 +105,10 @@ abstract class Modelo
                 $returnValue = array_map(function ($record) {
                     return $this->mapToObject($record);
                 }, $data);
-                $returnValue = $this->processRelations($returnValue);
+
+                if ($includeRelations) {
+                    $returnValue = $this->processRelations($returnValue);
+                }
             } else {
                 $returnValue = $db->getError();
             }
@@ -112,17 +119,23 @@ abstract class Modelo
         return $returnValue;
     }
 
-    public function find($id)
+    public function find($id, $includeRelations = true)
     {
         $returnValue = null;
         $db = new BaseDatos();
-        $sql = "{$this->makeSelectStatement()} where {$this->getPrimaryKey()} = :id";
+        $sql = "{$this->makeSelectStatement()} WHERE {$this->getPrimaryKey()} = :id";
 
         if ($db->init()) {
             if ($db->execute($sql, [":id" => $id])) {
                 $record = $db->getSingleRecord();
-                $returnValue = $this->mapToObject($record);
-                $returnValue = $this->processRelation($returnValue);
+
+                if ($record) {
+                    $returnValue = $this->mapToObject($record);
+
+                    if ($includeRelations) {
+                        $returnValue = $this->processRelation($returnValue);
+                    }
+                }
             } else {
                 $returnValue = $db->getError();
             }
@@ -232,7 +245,7 @@ abstract class Modelo
         return $returnValue;
     }
 
-    private function processRelation($record) 
+    private function processRelation($record)
     {
         $returnValue = $this->processRelations([$record]);
 
@@ -244,7 +257,7 @@ abstract class Modelo
     // [Relationship::HasOne => ['sensor' => Sensor::class], Relationship::HasMany => ['avisos' => Aviso::class]]
     private function processRelations($records)
     {
-        $returnValue = $records;
+        $returnValue = $records; // [{}]
         $relations = $this->getRelations();
 
         if ($relations !== null) {
@@ -256,13 +269,17 @@ abstract class Modelo
                     case Relationship::HasMany:
                         $returnValue = $this->processHasManyRelation($returnValue, $relationType);
                         break;
+                    case Relationship::HasManyToMany:
+                        $returnValue = $this->processHasManyToManyRelation($returnValue, $relationType);
+                        break;
                 }
             }
         }
 
         return $returnValue;
     }
-    // ['sensor' => Sensor::class]
+
+    // ['sensor' => Sensor::class, 'otra' => Otra::class]
     private function processHasOneRelation($records, $relationType)
     {
         $returnValue = $records;
@@ -275,8 +292,8 @@ abstract class Modelo
                 return $record->$method();
             }, $records);
 
-            $relationRecords = $relationObject->list("{$foreignPrimaryKey} IN (" . implode(",", $foreignKeyValues) . ")");
-            $relationRecordsByPrimaryKey = array_combine($foreignKeyValues, $relationRecords);
+            $relationRecords = $relationObject->list("{$foreignPrimaryKey} IN (" . implode(",", $foreignKeyValues) . ")", includeRelations: false);
+            $relationRecordsByPrimaryKey = array_combine($foreignKeyValues, $relationRecords);            
             $returnValue = array_map(function ($record) use ($foreignPrimaryKey, $relationName, $relationRecordsByPrimaryKey) {
                 $getter = "get" . ucfirst($foreignPrimaryKey);
                 $setter = "set" . ucfirst($relationName);
@@ -304,11 +321,49 @@ abstract class Modelo
             $primaryKeyValues = array_map(function ($record) {
                 return $record->getPrimaryKeyValue();
             }, $records);
-            $relationRecords = $relationObject->list("{$foreignPrimaryKey} IN (". implode(",", $primaryKeyValues). ")");
+            $relationRecords = $relationObject->list("{$foreignPrimaryKey} IN (" . implode(",", $primaryKeyValues) . ")", includeRelations: false);
             $returnValue = array_map(function ($record) use ($foreignPrimaryKey, $relationName, $relationRecords) {
-                $setter = "set". ucfirst($relationName);
+                $setter = "set" . ucfirst($relationName);
                 $relationRecordsByForeignKey = array_filter($relationRecords, function ($relationRecord) use ($foreignPrimaryKey, $record) {
-                    $getter = "get". ucfirst($foreignPrimaryKey);
+                    $getter = "get" . ucfirst($foreignPrimaryKey);
+                    $foreignKeyValue = $record->getPrimaryKeyValue();
+                    $relationForeignKeyValue = $relationRecord->$getter();
+
+                    return $foreignKeyValue === $relationForeignKeyValue;
+                });
+
+                $record->$setter($relationRecordsByForeignKey);
+
+                return $record;
+            }, $records);
+        }
+
+        return $returnValue;
+    }
+
+    // ['avisos' => [Aviso::class, 'w_temperaturasensortemperaturaaviso']]
+    private function processHasManyToManyRelation($records, $relationType)
+    {
+        $returnValue = $records;
+
+        // $relationType = ['avisos' => [Aviso::class, 'w_temperaturasensortemperaturaaviso']]
+        foreach ($relationType as $relationName => $relation) {
+            // $relation = ['avisos' => Aviso::class, 'pivot' => 'w_temperaturasensortemperaturaaviso']
+            list($relationClass, $pivotTable) = $relation;
+            $relationObject = new $relationClass();
+            $foreignPrimaryKey = $relationObject->getPrimaryKey();
+            $primaryKey = $this->getPrimaryKey();
+            $primaryKeyValues = array_map(function ($record) {
+                return $record->getPrimaryKeyValue();
+            }, $records);
+            $where = "WHERE {$pivotTable}.{$primaryKey} IN (" . implode(",", $primaryKeyValues) . ")";
+            $join = "INNER JOIN {$pivotTable} 
+                    ON {$relationObject->getTable()}.{$foreignPrimaryKey} = {$pivotTable}.{$foreignPrimaryKey}";
+            $relationRecords = $relationObject->list($where, $join, false);
+            $returnValue = array_map(function ($record) use ($foreignPrimaryKey, $relationName, $relationRecords) {
+                $setter = "set" . ucfirst($relationName);
+                $relationRecordsByForeignKey = array_filter($relationRecords, function ($relationRecord) use ($foreignPrimaryKey, $record) {
+                    $getter = "get" . ucfirst($foreignPrimaryKey);
                     $foreignKeyValue = $record->getPrimaryKeyValue();
                     $relationForeignKeyValue = $relationRecord->$getter();
 
@@ -341,7 +396,7 @@ abstract class Modelo
         return $object;
     }
 
-    private function makeSelectStatement()
+    public function makeSelectStatement()
     {
         $sql = "SELECT * FROM {$this->getTable()}";
         $isa = $this->getIsa();

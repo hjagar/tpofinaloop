@@ -56,23 +56,34 @@ class Input
         $label = $this->makeReadlinePrompt();
         $value = readline(Screen::showBottomLine("{$label}", $this->getLabelLength(), true));
         Screen::redrawRightLine();
+
         if (!$this->isCancelInput($value)) {
             if ($this->isRequired() && empty($value)) {
                 $this->showError(Constantes::formatMessage(Constantes::REQUIRED, $this->getLabel()));
-                $this->show();
+                $this->relocateToShow();
+                $returnValue = $this->show();
             } else {
+                $returnValue = true;
                 $this->setValue($value);
-            }
-
-            $returnValue = true;
+            }            
         }
 
         return $returnValue;
     }
 
-    public function showError($message): void
+    public function showError($message, $bottom = false): void
     {
-        echo Constantes::RED_COLOR . $message . Constantes::RESET_COLOR . "\n";
+        $redColor = Constantes::RED_COLOR;
+        $resetColor = Constantes::RESET_COLOR;
+        $redMessage = "{$redColor}{$message}{$resetColor}";
+        readline(Screen::showBottomLine($redMessage, Screen::plainLength($message), true));
+        Screen::cleanLine();              
+    }
+
+    protected function relocateToShow()
+    {
+        Cursor::up(2);
+        Cursor::first();
     }
 
     public function getName(): string

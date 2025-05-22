@@ -93,14 +93,15 @@ abstract class BaseView
     {
         $error = $this->getErrorColor();
         $reset = $this->getResetColor();
-        echo "{$error}{$message}{$reset}\n";
+
+        readline(Screen::showBottomLine("{$error}{$message}{$reset}", Screen::plainLength($message), true));
     }
 
     protected function showSuccess($message)
     {
         $green = $this->getGreenColor();
         $reset = $this->getResetColor();
-        echo "{$green}{$message}{$reset}\n";
+        readline(Screen::showBottomLine("{$green}{$message}{$reset}", Screen::plainLength($message), true));
     }
 
     protected function showMessage($message)

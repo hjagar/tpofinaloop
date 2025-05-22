@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Modelo;
+namespace App\ModeloV2;
 
-use App\Modelo\Sensor;
+use App\ModeloV2\Sensor;
 
 class SensorHeladera extends Sensor
 {
@@ -43,11 +43,11 @@ class SensorHeladera extends Sensor
         $this->marca = $v;
     }
 
-    public function getModelo()
+    public function getModeloV2()
     {
         return $this->modelo;
     }
-    public function setModelo($v)
+    public function setModeloV2($v)
     {
         $this->modelo = $v;
     }

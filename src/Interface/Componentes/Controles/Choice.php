@@ -14,9 +14,15 @@ class Choice extends Input
     private bool $showRequired;
     private $color;
 
-    public function __construct($label, array $options, $required = false, $name = null, $direction = Direction::VERTICAL, 
-        $showRequired = true, $color = null)  
-    {
+    public function __construct(
+        $label,
+        array $options,
+        $required = false,
+        $name = null,
+        $direction = Direction::VERTICAL,
+        $showRequired = true,
+        $color = null
+    ) {
         parent::__construct($label, $required, $name);
         $this->options = $options;
         $this->direction = $direction;
@@ -31,21 +37,20 @@ class Choice extends Input
         $options = $this->makeOptionsString();
         $choicePrompt = $this->makeChoicePrompt();
         $prompt = $this->createReadlinePrompt($label, $options, $choicePrompt);
-        $len = Screen::plainLength($prompt); 
-        $correction = $this->getCorrection();//echo $len;exit;
-        //$value = readline("{$prompt}");
+        $len = Screen::plainLength($prompt);
+        $correction = $this->getCorrection(); //echo $len;exit;
         $value = readline(Screen::showBottomLine($prompt, $len - $correction, true));
         Screen::redrawRightLine();
-        
+
         if (!$this->isCancelInput($value)) {
             if ($this->isRequired() && !array_key_exists($value, $this->options)) {
                 $this->showError(Constantes::formatMessage(Constantes::REQUIRED, $this->getLabel()));
-                $this->show();
+                $this->relocateToShow();
+                $returnValue = $this->show();
             } else {
                 $this->setValue($value);
+                $returnValue = true;
             }
-
-            $returnValue = true;
         }
 
         return $returnValue;
@@ -54,18 +59,19 @@ class Choice extends Input
     private function getCorrection(): int
     {
         $colorLength = $this->getColor() ? Screen::plainLength($this->getColor()) : 0;
-        $resetColorLength = $this->getColor()? Screen::plainLength(Constantes::RESET_COLOR) : 0;
+        $resetColorLength = $this->getColor() ? Screen::plainLength(Constantes::RESET_COLOR) : 0;
         $optionsCount = count($this->getOptions());
 
         return ($colorLength + $resetColorLength) * ($optionsCount + 2);
     }
-    
-    private function createReadlinePrompt($label, $options, $choice){
+
+    private function createReadlinePrompt($label, $options, $choice)
+    {
         $promptFirstElements = [$label, $options];
         $labelSeparator = $this->getLabelSeparator();
         $selectionSeparator = $this->getSelectionSeparator();
         $promptElements = implode($labelSeparator, $promptFirstElements);
-        $promptFinalElements = [$promptElements, $choice];      
+        $promptFinalElements = [$promptElements, $choice];
 
         return implode($selectionSeparator, $promptFinalElements);
     }
@@ -102,12 +108,12 @@ class Choice extends Input
     {
         return $this->getDirection() === Direction::HORIZONTAL ? Separator::SPACE->value() : Separator::NEWLINE->value();
     }
-    
+
     private function getSelectionSeparator(): string
     {
         return $this->getDirection() === Direction::HORIZONTAL ? Separator::DASH->value() : Separator::NEWLINE->value();
     }
-    
+
     private function getDirection(): Direction
     {
         return $this->direction;

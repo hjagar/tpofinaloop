@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Modelo;
+namespace App\ModeloV2;
 
-use App\Modelo\Modelo;
-use App\Modelo\Relationship;
-use App\Modelo\Alarma;
+use App\ModeloV2\Modelo;
+use App\ModeloV2\Relationship;
+use App\ModeloV2\Alarma;
 
 class Aviso extends Modelo
 {
@@ -12,7 +12,7 @@ class Aviso extends Modelo
     private $taactivo;
     private $tanombre;
     private $taemail;
-    private $alarmas;
+    private $sensores;
 
     public function __construct()
     {
@@ -21,11 +21,7 @@ class Aviso extends Modelo
             'w_temperaturaaviso',
             ['idtemperaturaaviso', 'taactivo', 'tanombre', 'taemail'],
             'idtemperaturaaviso',
-            [
-                Relationship::HasMany => [
-                    'alarmas' => Alarma::class
-                ]
-            ]
+            relations: [Relationship::HasManyToMany => ['sensores' => [Sensor::class, 'w_temperaturasensortemperaturaaviso']]]
         );
 
         $this->idtemperaturaaviso = null;
@@ -74,13 +70,13 @@ class Aviso extends Modelo
         $this->taemail = $taemail;
     }
 
-    public function getAlarmas()
+    public function getSensores()
     {
-        return $this->alarmas;
+        return $this->sensores;
     }
 
-    public function setAlarmas($alarmas)
+    public function setSensores($sensores)
     {
-        $this->alarmas = $alarmas;
+        $this->sensores = $sensores;
     }
 }

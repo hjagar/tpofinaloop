@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Modelo;
+namespace App\ModeloV2;
 
-use App\Modelo\Modelo;
-use App\Modelo\Sensor;
+use App\ModeloV2\ModeloV2;
+use App\ModeloV2\Sensor;
 
 class Registro extends Modelo
 {
@@ -20,7 +20,7 @@ class Registro extends Modelo
             'w_temperaturaregistro',
             ['idtemperaturaregistro', 'idtemperaturasensor', 'tltemperatura', 'tlfecharegistro'],
             'idtemperaturaregistro',
-            [Relationship::HasOne => ['sensor' => Sensor::class]]
+            relations: [Relationship::HasOne => ['sensor' => Sensor::class]]
         );
     }
 

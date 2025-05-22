@@ -30,15 +30,19 @@ abstract class DeleteFormView extends FormView
         return $returnValue;
     }
 
-    protected function processResult($result)
+    protected function processResult($result, $showMessage = false)
     {
         $returnValue = null;
 
         if (is_object($result) && $result) {
-            $this->showSuccess(Constantes::formatMessage(Constantes::DELETE_MESSAGE, $this->getEntity()));
-            $returnValue = true;
+            if ($showMessage) {
+                $this->showSuccess(Constantes::formatMessage(Constantes::DELETE_MESSAGE, $this->getEntity()));
+            }
+            $returnValue = $result;
         } else {
-            $this->showError(Constantes::formatMessage(Constantes::DELETE_ERROR_MESSAGE, $result));
+            if ($showMessage) {
+                $this->showError(Constantes::formatMessage(Constantes::DELETE_ERROR_MESSAGE, $result));
+            }
             $returnValue = false;
         }
 

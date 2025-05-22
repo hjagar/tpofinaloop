@@ -73,15 +73,19 @@ abstract class UpdateFormView extends FormView
         return [$id, $request];
     }
 
-    protected function processResult($result)
+    protected function processResult($result, $showMessage = false)
     {
         $returnValue = null;
 
         if (is_object($result) && $result) {
-            $this->showSuccess(Constantes::formatMessage(Constantes::UPDATE_MESSAGE, $this->getEntity()));
-            $returnValue = true;
+            if ($showMessage) {
+                $this->showSuccess(Constantes::formatMessage(Constantes::UPDATE_MESSAGE, $this->getEntity()));
+            }
+            $returnValue = $result;
         } else {
-            $this->showError(Constantes::formatMessage(Constantes::UPDATE_ERROR_MESSAGE, $result));
+            if ($showMessage) {
+                $this->showError(Constantes::formatMessage(Constantes::UPDATE_ERROR_MESSAGE, $result));
+            }
             $returnValue = false;
         }
 
@@ -93,6 +97,6 @@ abstract class UpdateFormView extends FormView
     {
         list($id, $request) = $this->prepareRequest();
         $response = $this->getController()->update($id, $request);
-        $result = $this->verifyResponse($response);
+        $this->verifyResponse($response, true);
     }
 }

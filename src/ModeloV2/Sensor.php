@@ -1,9 +1,9 @@
 <?php
-namespace App\Modelo;
+namespace App\ModeloV2;
 
-use App\Modelo\Modelo;
-use App\Modelo\Registro;
-use App\Modelo\Alarma;
+use App\ModeloV2\ModeloV2;
+use App\ModeloV2\Registro;
+use App\ModeloV2\Alarma;
 
 class Sensor extends Modelo
 {
@@ -14,6 +14,7 @@ class Sensor extends Modelo
     private $tsmontoresguardado;
     private $registros;
     private $alertas;
+    private $avisos;
 
     public function __construct($className = null, $tableName = null, $columnNames = null, $autoIncrement = true, $isa = null)
     {  

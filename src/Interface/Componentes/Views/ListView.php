@@ -123,7 +123,7 @@ abstract class ListView extends ActionView
         }
     }
 
-    protected function processResult($result): bool | array
+    protected function processResult($result, $showMessage = false): bool | array
     {
         $returnValue = null;
 

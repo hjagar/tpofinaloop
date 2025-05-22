@@ -48,9 +48,9 @@ abstract class ActionView extends BaseView
         return $this->entity;
     }
 
-    protected abstract function processResult($result);
+    protected abstract function processResult($result, $showMessage);
 
-    protected function verifyResponse(Response $response): array | object | bool | string | null
+    protected function verifyResponse(Response $response, $showMessage = false): array | object | bool | string | null
     {
         $returnValue = null;
 
@@ -64,6 +64,6 @@ abstract class ActionView extends BaseView
             $returnValue = $response->getMessage();
         }
 
-        return $this->processResult($returnValue);
+        return $this->processResult($returnValue, $showMessage);
     }
 }

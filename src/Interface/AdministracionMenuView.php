@@ -30,7 +30,7 @@ class AdministracionMenuView extends MenuView
                 'Class' => SensorServidorMenuView::class,
             ],
             '4' => [
-                'Label' => 'Sensor  Aviso',
+                'Label' => 'Sensor Aviso',
                 'Class' => AvisoAlarmaMenuView::class,
             ],
             '5' => [

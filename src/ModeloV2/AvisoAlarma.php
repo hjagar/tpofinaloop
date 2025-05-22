@@ -1,5 +1,5 @@
 <?php
-namespace App\Modelo;
+namespace App\ModeloV2;
 
 class AvisoAlarma extends Modelo
 {

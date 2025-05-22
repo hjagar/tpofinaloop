@@ -21,9 +21,9 @@ class Select extends Input
         if ($returnValue) {
             $callback = $this->getCallback();
 
-            if ($callback !== null) {
+            if ($callback !== null && $this->getValue() !== null) {
                 if (!$callback($this->getValue())) {
-                    $this->show();
+                    $returnValue = parent::show();
                 }
             }
         }

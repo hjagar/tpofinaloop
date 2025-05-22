@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Modelo;
+namespace App\ModeloV2;
 
-use App\Modelo\Sensor;
+use App\ModeloV2\Sensor;
 
 class SensorServidor extends Sensor
 {

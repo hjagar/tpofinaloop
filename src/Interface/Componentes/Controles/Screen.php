@@ -75,4 +75,9 @@ class Screen
         Cursor::down();
         Cursor::first();
     }
+
+    public static function cleanLine()
+    {
+        echo "\033[2K\r";
+    }
 }

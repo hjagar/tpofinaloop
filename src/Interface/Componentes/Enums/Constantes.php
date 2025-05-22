@@ -51,8 +51,8 @@ class Constantes
     const SAVE = "Guardar";
     const CANCEL = "Cancelar";
     const CANCEL_MESSAGE = "Operación cancelada.\n";
-    const DELETE_MESSAGE = "Registro de %s eliminado con éxito.\n";
-    const DELETE_ERROR_MESSAGE = "Error al eliminar: %s.\n";
+    const DELETE_MESSAGE = "Registro de %s eliminado con éxito.";
+    const DELETE_ERROR_MESSAGE = "Error al eliminar: %s.";
     const DELETE_CONFIRMATION_MESSAGE = "¿Está seguro de eliminar %s (%s)?";
     const SAVE_MESSAGE = "Registro de %s guardado con éxito.\n";
     const SAVE_ERROR_MESSAGE = "Error al guardar: %s.\n";
@@ -60,11 +60,11 @@ class Constantes
     const LIST_ERROR = "Error al recuperar lista de %s.\n";
     const NOT_FOUND_ERROR_MESSAGE = "No se encontró el registro de %s.\n";
     const UPDATE_SUBTITLE =  " 'Enter' mantener valor. '-' blanquear valor.";
-    const UPDATE_MESSAGE = "Registro de %s actualizado con éxito.\n";
-    const UPDATE_ERROR_MESSAGE = "Error al actualizar: %s.\n";
+    const UPDATE_MESSAGE = "Registro de %s actualizado con éxito.";
+    const UPDATE_ERROR_MESSAGE = "Error al actualizar: %s.";
     const CHOICE_MESSAGE = "Seleccione una opción:";
-    const CHOICE_ERROR_MESSAGE = "Opción no válida.\n";
-    const REQUIRED = "%s es requerido.\n";
+    const CHOICE_ERROR_MESSAGE = "Opción no válida.";
+    const REQUIRED = "%s es requerido.";
     const REQUIRED_SYMBOL = "*";
     const INPUT_INDENT = 2;
 
