@@ -12,15 +12,21 @@ abstract class CreateFormView extends FormView
         parent::__construct("Agregar {$entity}", $controlClass, $entity, inputs: $inputs);
     }
 
-    protected function processResult($result)
+    protected function processResult($result, $showMessage = false): bool
     {
         $returnValue = null;
 
         if (is_object($result) && $result) {
-            $this->showSuccess(Constantes::formatMessage(Constantes::SAVE_MESSAGE, $this->getEntity()));
+            if ($showMessage) {
+                $this->showSuccess(Constantes::formatMessage(Constantes::SAVE_MESSAGE, $this->getEntity()));
+            }
+
             $returnValue = true;
         } else {
-            $this->showError(Constantes::formatMessage(Constantes::SAVE_ERROR_MESSAGE, $result));
+            if ($showMessage) {
+                $this->showError(Constantes::formatMessage(Constantes::SAVE_ERROR_MESSAGE, $result));
+            }
+            
             $returnValue = false;
         }
 
